@@ -80,16 +80,16 @@ public class ReceptionUser {
     }
 
     static void receptionUserMenu() {
-        ReceptionMenuItem receptionMenuChoice;
+        
+        ReceptionMenuItem userMenuChoice;
 
-        //System.out.println("Playing the game...");
         System.out.println("");
 
         do {
             // Show the menu choices, and get a valid choice from the user
-            receptionMenuChoice = getReceptionMenuChoice("What do you want to do? ");
+            userMenuChoice = getReceptionMenuChoice("What do you want to do? ");
 
-            switch (receptionMenuChoice) {
+            switch (userMenuChoice) {
                 case RECEPTION_MENU_STORE_CUSTOMER_:
                     System.out.println("TODO: Handle storing customer data");
                     break;
@@ -107,7 +107,7 @@ public class ReceptionUser {
                 case RECEPTION_MENU_UPGRADE_ROOM___:
                 case RECEPTION_MENU_ORDER_FOOD_____:
 
-                    System.out.println("TODO: Handle choice " + receptionMenuChoice.getMenyChoiceChar());
+                    System.out.println("TODO: Handle choice " + userMenuChoice.getMenyChoiceChar());
                     break;
 
                 case RECEPTION_MENU_HIDDEN_TEST____:
@@ -125,7 +125,7 @@ public class ReceptionUser {
 
             System.out.println("");
 
-        } while (receptionMenuChoice != ReceptionMenuItem.RECEPTION_MENU_EXIT_RECEPTION_);
+        } while (userMenuChoice != ReceptionMenuItem.RECEPTION_MENU_EXIT_RECEPTION_);
     }
 
     // Show the menu choices, and get a valid choice from the user
@@ -133,7 +133,7 @@ public class ReceptionUser {
         String choiceStr;
         ReceptionMenuItem userMenuChoice;
 
-        System.out.println("Receptionation menu:" + YELLOW);
+        System.out.println("Reception menu:" + YELLOW);
 
         // Loop over all meny choices in the enum, and print the "meny choice texts" for the enabled & non-hidden ones
         for (ReceptionMenuItem value : ReceptionMenuItem.values()) {
