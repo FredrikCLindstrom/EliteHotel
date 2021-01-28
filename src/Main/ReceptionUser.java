@@ -6,71 +6,67 @@ public class ReceptionUser {
 
     private final static Scanner SCANNER = new Scanner(System.in);
 
-    // Console color strings, bright versions: https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html  
-    public static final String RESET = "\u001b[0m";
-    public static final String GREY = "\u001b[30;1m";
-    public static final String RED = "\u001b[31;1m";
-    public static final String GREEN = "\u001b[32;1m";
-    public static final String YELLOW = "\u001b[33;1m";
-    public static final String BLUE = "\u001b[34;1m";
-    public static final String MAGENTA = "\u001b[35;1m";
-    public static final String CYAN = "\u001b[36;1m";
-    public static final String WHITE = "\u001b[37;1m";
+    public static final String MENU_COLOR = Misc.CYAN;
+    public static final String CHOICE_COLOR = Misc.YELLOW;
+    public static final String ERROR_COLOR = Misc.RED;
+    public static final String INFO_COLOR = Misc.GREEN;
+    public static final String TODO_COLOR = Misc.MAGENTA;
+    public static final String RESET_COLOR = Misc.RESET; // Normally white color
 
     public enum ReceptionMenuItem {
-        // parameters menuChar, menuChoiceText, enabledMenyChoice, hiddenMenyChoice
-        RECEPTION_MENU_STORE_CUSTOMER_('1', "Store customer data",      true, false),
-        RECEPTION_MENU_SEARCH_CUSTOMER('2', "Searching customer data",  true, false),
-        RECEPTION_MENU_CHANGE_CUSTOMER('C', "Change customer data", true, false),
-        RECEPTION_MENU_DELETE_CUSTOMER('D', "Delete customer data", true, false),
-        RECEPTION_MENU_BOOK_ROOM______('B', "Book a room", true, false),
-        RECEPTION_MENU_UPGRADE_ROOM___('U', "Upgrade a room", true, false),
-        RECEPTION_MENU_ORDER_FOOD_____('F', "Order food", true, false),
-        RECEPTION_MENU_HIDDEN_TEST____('!', "HIDDEN CHOICE, NOT SHOWN", true, true),
-        RECEPTION_MENU_EXIT_RECEPTION_('X', "Exit reception menu", true, false);
+        // parameters menuChar, menuChoiceText, enabledMenuChoice, hiddenMenuChoice
+        RECEPTION_MENU_____STORE_GUEST('T', "STore guest data", true, false),
+        RECEPTION_MENU____SEARCH_GUEST('S', "Search guest data", true, false),
+        RECEPTION_MENU____CHANGE_GUEST('C', "Change guest data", true, false),
+        RECEPTION_MENU____DELETE_GUEST('D', "Delete guest data", true, false),
+        RECEPTION_MENU_______BOOK_ROOM('B', "Book a room", true, false),
+        RECEPTION_MENU____UPGRADE_ROOM('U', "Upgrade a room", true, false),
+        RECEPTION_MENU______ORDER_FOOD('F', "Order Food", true, false),
+        RECEPTION_MENU_____HIDDEN_TEST('!', "HIDDEN CHOICE, NOT SHOWN", true, true),
+        RECEPTION_MENU__EXIT_RECEPTION('X', "EXit reception menu", true, false);
 
-        private final String menyText;
-        private final char menyChar;
-        private boolean enabledMenyChoice;
-        private boolean hiddenMenyChoice;
+        private final String menuText;
+        private final char menuChar;
+        private boolean enabledMenuChoice;
+        private boolean hiddenMenuChoice;
 
-        ReceptionMenuItem(char menuCh, String menuChoiceText, boolean enabledMenyChoice, boolean hiddenMenyChoice) {
-            this.menyChar = menuCh;
-            this.menyText = menuChoiceText;
-            this.enabledMenyChoice = enabledMenyChoice;
-            this.hiddenMenyChoice = hiddenMenyChoice;
+        ReceptionMenuItem(char menuCh, String menuChoiceText, boolean enabledMenuChoice, boolean hiddenMenuChoice) {
+            this.menuChar = menuCh;
+            this.menuText = menuChoiceText;
+            this.enabledMenuChoice = enabledMenuChoice;
+            this.hiddenMenuChoice = hiddenMenuChoice;
         }
 
-        public char getMenyChoiceChar() {
-            return menyChar;
+        public char getMenuChoiceChar() {
+            return menuChar;
         }
 
         public String getMenuChoiceText() {
-            return menyText;
+            return menuText;
         }
 
-        public void setEnabledMenyChoice(boolean enabledMenyChoice) {
-            this.enabledMenyChoice = enabledMenyChoice;
+        public void setEnabledMenuChoice(boolean enabledMenuChoice) {
+            this.enabledMenuChoice = enabledMenuChoice;
         }
 
-        public void setHiddenMenyChoice(boolean hiddenMenyChoice) {
-            this.hiddenMenyChoice = hiddenMenyChoice;
+        public void setHiddenMenuChoice(boolean hiddenMenuChoice) {
+            this.hiddenMenuChoice = hiddenMenuChoice;
         }
 
-        public boolean isEnabledMenyChoice() {
-            return enabledMenyChoice;
+        public boolean isEnabledMenuChoice() {
+            return enabledMenuChoice;
         }
 
-        public boolean ishiddenMenyChoice() {
-            return hiddenMenyChoice;
+        public boolean ishiddenMenuChoice() {
+            return hiddenMenuChoice;
         }
 
         public ReceptionMenuItem getReceptionMenuItem(char menuCh) {
             ReceptionMenuItem menuItem = null;
 
-            // Loop over all the meny choises, and return the right (first) item that is enabled and has the matching character
+            // Loop over all the menu choises, and return the right (first) item that is enabled and has the matching character
             for (ReceptionMenuItem value : ReceptionMenuItem.values()) {
-                if (value.isEnabledMenyChoice() && (menuCh == value.getMenyChoiceChar()) || Character.toLowerCase(menuCh) == Character.toLowerCase(value.getMenyChoiceChar())) {
+                if (value.isEnabledMenuChoice() && (menuCh == value.getMenuChoiceChar()) || Character.toLowerCase(menuCh) == Character.toLowerCase(value.getMenuChoiceChar())) {
                     menuItem = value;
                     return menuItem;
                 }
@@ -80,7 +76,9 @@ public class ReceptionUser {
     }
 
     static void receptionUserMenu() {
-        
+
+        System.out.println(INFO_COLOR + "Straight to the rececption menu (no login or security check for now)" + RESET_COLOR);
+
         ReceptionMenuItem userMenuChoice;
 
         System.out.println("");
@@ -90,42 +88,41 @@ public class ReceptionUser {
             userMenuChoice = getReceptionMenuChoice("What do you want to do? ");
 
             switch (userMenuChoice) {
-                case RECEPTION_MENU_STORE_CUSTOMER_:
-                    System.out.println("TODO: Handle storing customer data");
+                case RECEPTION_MENU_____STORE_GUEST:
+                    System.out.println(TODO_COLOR + "TODO: Handle storing guest data"+ RESET_COLOR);
                     break;
 
-                case RECEPTION_MENU_CHANGE_CUSTOMER:
-                    System.out.println("TODO: Handle changing customer data");
+                case RECEPTION_MENU____CHANGE_GUEST:
+                    System.out.println(TODO_COLOR + "TODO: Handle changing guest data"+ RESET_COLOR);
                     break;
 
-                case RECEPTION_MENU_SEARCH_CUSTOMER:
-                    System.out.println("TODO: Handle searching for customer data");
+                case RECEPTION_MENU____SEARCH_GUEST:
+                    System.out.println(TODO_COLOR + "TODO: Handle searching for guest data"+ RESET_COLOR);
                     break;
 
-                case RECEPTION_MENU_DELETE_CUSTOMER:
-                case RECEPTION_MENU_BOOK_ROOM______:
-                case RECEPTION_MENU_UPGRADE_ROOM___:
-                case RECEPTION_MENU_ORDER_FOOD_____:
-
-                    System.out.println("TODO: Handle choice " + userMenuChoice.getMenyChoiceChar());
+                case RECEPTION_MENU____DELETE_GUEST:
+                case RECEPTION_MENU_______BOOK_ROOM:
+                case RECEPTION_MENU____UPGRADE_ROOM:
+                case RECEPTION_MENU______ORDER_FOOD:
+                    System.out.println(TODO_COLOR + "TODO: Handle choice " + userMenuChoice.getMenuChoiceChar() + ", " + userMenuChoice.getMenuChoiceText()+ RESET_COLOR);
                     break;
 
-                case RECEPTION_MENU_HIDDEN_TEST____:
-                    System.out.println("You found the HIDDEN MENU CHOICE - TODO: Handle this");
+                case RECEPTION_MENU_____HIDDEN_TEST:
+                    System.out.println(TODO_COLOR + "You found the HIDDEN MENU CHOICE - TODO: Handle this");
                     break;
 
-                case RECEPTION_MENU_EXIT_RECEPTION_:
-                    System.out.println("The program is shutting down");
+                case RECEPTION_MENU__EXIT_RECEPTION:
+                    System.out.println("Exiting from the reception menu");
                     break;
 
                 default: {
-                    System.out.println(RED + "Unexpected error, should never end up here after the shape checks, missing case in switch?" + RESET);
+                    System.out.println(ERROR_COLOR + "Unexpected error, should never end up here after the shape checks, missing case in switch?" + RESET_COLOR);
                 }
             }
 
             System.out.println("");
 
-        } while (userMenuChoice != ReceptionMenuItem.RECEPTION_MENU_EXIT_RECEPTION_);
+        } while (userMenuChoice != ReceptionMenuItem.RECEPTION_MENU__EXIT_RECEPTION);
     }
 
     // Show the menu choices, and get a valid choice from the user
@@ -133,18 +130,22 @@ public class ReceptionUser {
         String choiceStr;
         ReceptionMenuItem userMenuChoice;
 
-        System.out.println("Reception menu:" + YELLOW);
+        System.out.println("---- Reception menu: ----" + MENU_COLOR);
 
-        // Loop over all meny choices in the enum, and print the "meny choice texts" for the enabled & non-hidden ones
+        // Loop over all menu choices in the enum, and print the "menu choice texts" for the enabled & non-hidden ones
         for (ReceptionMenuItem value : ReceptionMenuItem.values()) {
-            if (value.isEnabledMenyChoice() && !value.ishiddenMenyChoice()) {
-                System.out.println(YELLOW + value.getMenyChoiceChar() + ": " + value.getMenuChoiceText());
+            if (value.isEnabledMenuChoice() && !value.ishiddenMenuChoice()) {
+                // Get hold of the menu chioce character, in string form
+                choiceStr = ((Character) value.getMenuChoiceChar()).toString();
+
+                System.out.println(CHOICE_COLOR + value.getMenuChoiceChar() + MENU_COLOR + ": "
+                        + value.getMenuChoiceText().replaceFirst(choiceStr, CHOICE_COLOR + choiceStr + MENU_COLOR));
             }
         }
 
         do {  // loop until a valid choice has been read
 
-            System.out.print(RESET + prompt);
+            System.out.print(RESET_COLOR + prompt);
 
             // Try to read an menu choice integer from the console
             choiceStr = SCANNER.nextLine();
@@ -152,13 +153,12 @@ public class ReceptionUser {
             userMenuChoice = (choiceStr.length() > 0) ? ReceptionMenuItem.values()[0].getReceptionMenuItem(choiceStr.charAt(0)) : null;
 
             if (userMenuChoice == null) {
-                System.out.println(RED + "Not a valid choice. " + "Try again!" + RESET);
+                System.out.println(ERROR_COLOR + "Not a valid choice. " + RESET_COLOR + "Try again!");
 
             }
 
         } while (userMenuChoice == null); // Loop as long as we haven't got a valid choice
 
-        System.out.println("");
         return userMenuChoice;
     }
 
