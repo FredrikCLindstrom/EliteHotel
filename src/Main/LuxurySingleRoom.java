@@ -7,7 +7,7 @@ public class LuxurySingleRoom extends Room {
         this.name = "Luxury Single Room";
 
         this.beds = 1; // One single bed";
-        this.bedName = "Single bed";
+        this.bedName = "Twin bed";
         this.acEquipped = true;
         this.breakfastIncluded = true;
         this.chargePerDay = 3000;  // SEK 
