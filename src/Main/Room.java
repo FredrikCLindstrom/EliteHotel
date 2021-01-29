@@ -60,4 +60,13 @@ public class Room {
         str += (this.guest != null) ? guest.toString(): "unoccupied";
         return str;
     }
+    
+    public String descriptionOfRooms(){
+        String str = this.name + ", " + this.beds + " " + this.bedName + ", ";
+        str += (this.acEquipped ? "AC, " : "no AC, ");
+        str += (this.breakfastIncluded ? "breakfast included, " : "no breakfast, ");
+        str += "cost " + chargePerDay + ", ";
+        
+        return str;
+    }
 }
