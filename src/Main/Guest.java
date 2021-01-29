@@ -30,6 +30,12 @@ public class Guest {
         this.lastName = lastName;
     }
 
+    public static int getId() {
+        return id;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "Guest{" + "firstName=" + firstName + ", lastName=" + lastName + '}';
