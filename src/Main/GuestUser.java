@@ -1,6 +1,7 @@
 package Main;
 
 import java.util.Scanner;
+import static java.util.stream.Collectors.toList;
 
 public class GuestUser {
 
@@ -85,6 +86,10 @@ public class GuestUser {
 
             switch (userMenuChoice) {
                 case GUEST_MENU___DISPLAY_ROOMS:
+                    ShowAllRooms();
+                    diffrentTypesOfRoomsDescription();
+                    emptyRooms();
+                    HotelManagementSystem.testingMethod();
                 case GUEST_MENU_AVAILABLE_ROOMS:
                 case GUEST_MENU_______BOOK_ROOM:
                 case GUEST_MENU______ORDER_FOOD:
@@ -147,4 +152,26 @@ public class GuestUser {
         return userMenuChoice;
     }
 
+    private static void ShowAllRooms(){
+        System.out.println("ALL ROOMS"); //TODO: REMOVE THIS
+        HotelManagementSystem.allRoomsList.stream().forEach(e->System.out.println(e.toString()));
+    }
+    
+    private static void diffrentTypesOfRoomsDescription(){
+        System.out.println("DIFFRENT TYPE OF ROOMS");
+        HotelManagementSystem.diffrentTypeOfRoomsList.stream().forEach(e->System.out.println(e.descriptionOfRooms()));
+    }
+    
+    private static void emptyRooms(){
+        System.out.println("EMPTY ROOMS"); //TODO: REMOVE THIS
+        HotelManagementSystem.emptyRoomsList.clear();
+        HotelManagementSystem.emptyRoomsList=
+                HotelManagementSystem.allRoomsList.
+                stream().
+                filter(e->e.guest==null).
+                collect(toList());
+        
+        HotelManagementSystem.emptyRoomsList.stream().forEach(System.out::println);
+    }
+    
 }
