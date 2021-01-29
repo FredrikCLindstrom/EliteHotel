@@ -34,7 +34,7 @@ public class Room {
     public String getBedName() {
         return bedName;
     }
-        
+
     public boolean isAcEquipped() {
         return acEquipped;
     }
@@ -53,11 +53,11 @@ public class Room {
 
     @Override
     public String toString() {
-        String str = "Nr " + this.roomNr + ", " + this.name + ", " + this.beds + " " + this.bedName + ", AC=" + this.acEquipped + ", Breakfast=" + 
-                this.breakfastIncluded + ", charge " + this.chargePerDay + "; ";
-        if (this.guest != null) {
-            str += "guest: " + guest.toString();
-        }
+        String str = "Room " + this.roomNr + ", " + this.name + ", " + this.beds + " " + this.bedName + ", ";
+        str += (this.acEquipped ? "AC, " : "no AC, ");
+        str += (this.breakfastIncluded ? "breakfast included, " : "no breakfast, ");
+        str += "cost " + chargePerDay + ", ";
+        str += (this.guest != null) ? guest.toString(): "unoccupied";
         return str;
     }
 }
