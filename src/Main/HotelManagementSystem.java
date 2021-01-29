@@ -1,8 +1,16 @@
 package Main;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class HotelManagementSystem {
+    
+    static List<Room> allRoomsList = new ArrayList<>();
+    static List<Room> diffrentTypeOfRoomsList = new ArrayList<>();
+    static List<Room> emptyRoomsList = new ArrayList<>();
+    static List<Room> testingRoomList = new ArrayList<>();
 
     public static final String MENU_COLOR = Misc.CYAN;
     public static final String CHOICE_COLOR = Misc.YELLOW;
@@ -71,6 +79,7 @@ public class HotelManagementSystem {
 
     public static void main(String[] args) {
 
+        addRoomsToLists();
         //Hotel thisHotel = new Hotel();
         UseAsGuestOrReceptionist();
 
@@ -152,6 +161,83 @@ public class HotelManagementSystem {
         return userMenuChoice;
     }
 
+    
+    public static void addRoomsToLists(){
+        
+        Room roomSS1 = new StandardSingleRoom();
+        Room roomSS2 = new StandardSingleRoom();
+        Room roomSS3 = new StandardSingleRoom();
+        Room roomSS4 = new StandardSingleRoom();
+        Room roomSS5 = new StandardSingleRoom();
+        
+        Room roomSD1 = new StandardDoubleRoom();
+        Room roomSD2 = new StandardDoubleRoom();
+        Room roomSD3 = new StandardDoubleRoom();
+        Room roomSD4 = new StandardDoubleRoom();
+        Room roomSD5 = new StandardDoubleRoom();
+        
+        Room roomLS1 = new LuxurySingleRoom();
+        Room roomLS2 = new LuxurySingleRoom();
+        Room roomLS3 = new LuxurySingleRoom();
+        Room roomLS4 = new LuxurySingleRoom();
+        Room roomLS5 = new LuxurySingleRoom();
+        
+        Room roomLD1 = new LuxuryDoubleRoom();
+        Room roomLD2 = new LuxuryDoubleRoom();
+        Room roomLD3 = new LuxuryDoubleRoom();
+        Room roomLD4 = new LuxuryDoubleRoom();
+        Room roomLD5 = new LuxuryDoubleRoom();
+        
+        allRoomsList.add(roomSS1);
+        allRoomsList.add(roomSS2);
+        allRoomsList.add(roomSS3);
+        allRoomsList.add(roomSS4);
+        allRoomsList.add(roomSS5);
+        
+        allRoomsList.add(roomSD1);
+        allRoomsList.add(roomSD2);
+        allRoomsList.add(roomSD3);
+        allRoomsList.add(roomSD4);
+        allRoomsList.add(roomSD5);
+        
+        allRoomsList.add(roomLS1);
+        allRoomsList.add(roomLS2);
+        allRoomsList.add(roomLS3);
+        allRoomsList.add(roomLS4);
+        allRoomsList.add(roomLS5);
+        
+        allRoomsList.add(roomLD1);
+        allRoomsList.add(roomLD2);
+        allRoomsList.add(roomLD3);
+        allRoomsList.add(roomLD4);
+        allRoomsList.add(roomLD5);
+        
+        diffrentTypeOfRoomsList.add(roomSS1);
+        diffrentTypeOfRoomsList.add(roomSD1);
+        diffrentTypeOfRoomsList.add(roomLS1);
+        diffrentTypeOfRoomsList.add(roomLD1);
+    }
+    
+    public static void testingMethod() throws IOException{
+        System.out.println("TestMethod 4 rooms, 2 of them");
+        String[] firstNames = {"mister", "dennis", "klara", "kenny","vince"};
+        String[] lastNames = {"mistersson", "karlson", "götesson", "bennysson", "hoofs"};
+        testingRoomList.addAll(diffrentTypeOfRoomsList);
+        int i=0;
+        for (Room room : testingRoomList) {
+            i++;
+            if(i%2==0){
+                room.guest=new Guest(firstNames[i],lastNames[i]);
+            }
+        }
+        testingRoomList.stream().forEach(e->System.out.println(e.toString()));
+        System.out.println("test for occupied rooms");
+        testingRoomList.stream().filter(e->e.guest!=null).forEach(e->System.err.println("Room Number:"+e.roomNr+" "+e.name+" is occupied"));
+        FileManagement.printToTextDoc(testingRoomList.get(3).getGuest());
+        
+    }
+    
+    
 }
 
 
