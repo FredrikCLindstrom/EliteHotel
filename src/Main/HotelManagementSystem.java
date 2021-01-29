@@ -119,7 +119,7 @@ public class HotelManagementSystem {
         String choiceStr;
         MainMenuItem userMenuChoice;
 
-        System.out.println("---- Main menu: ----" + MENU_COLOR);
+        System.out.println("==== Main menu: ====" + MENU_COLOR);
 
         // Loop over all menu choices in the enum, and print the "menu choice texts" for the enabled & non-hidden ones
         for (MainMenuItem value : MainMenuItem.values()) {
@@ -153,3 +153,158 @@ public class HotelManagementSystem {
     }
 
 }
+
+
+/*
+===== HOTEL BOOKING MANAGEMENT PROJECT  ==========
+Ghulam Murtaza
+
+--- INTRODUCTION ----------------------------------
+Elite Hotel Management Project in Java is designed which can be used to manage activities
+
+ Storing Customer Details
+ Searching Customer Details
+ Upgrade and delete details
+ Booking and upgrading room
+ Ordering Food for Particular Room
+ Check out for customer and showing bill
+
+ It can also be used to see different room features and room availability.
+ It is a menu driven program and it runs until the user exits.
+ User defined exception is thrown if the user tries to book an already allotted room.
+  Exception handling is properly done to deal with any kind of unexpected exception.
+
+--- ROOM TYPES --------------------------------------
+1. Luxury Double Room
+2. Deluxe Double Room
+3. Luxury Single Room
+4. Deluxe Single Room
+You are Free to add or remove items in the list.
+
+--- FOOD MENU ---------------------------------------
+1. Sandwich .   150 SEK
+2. Pasta Rs.    160 SEk
+3. Noodles      170 SEK
+4 Drink         30 SEK
+You are Free to add or remove items in the¨menu.
+
+--- TOPIC COVERED ------------------------------------
+ Classes, Interface
+ Collections
+ Exceptions
+ Lambda
+ Stream
+ Generics
+ File Handling
+
+--- INTRODUCTION -------------------------------------
+This project is divided into two parts
+ First Part is to build a structure.
+ Second part is to save data on file or database 
+    and read from it and finish the project to present it.
+
+--- GROUP WORK ---------------------------------------
+ You can work in a group of maximum three students.
+
+--- UI -----------------------------------------------
+ You are free to choose UI for System
+ One recomendations is given in next Slides
+
+--- UI FOR CUSTOMER VIEW ------------------------------
+Enter your choice :
+1. Display room details
+2. Display room availability
+3. Book
+4. Order food
+5. Checkout
+6. Exit
+ 1
+
+Choose room type :
+1. Luxury Double Room
+2. Deluxe Double Room
+3. Luxury Single Room
+4.Deluxe Single Room
+ 1
+
+Number of double beds : 1
+AC : Yes
+Free breakfast : Yes
+Charge per day:4000
+Continue : (y/n)
+ y
+
+Enter your choice :
+1.Display room details
+2.Display room availability
+3.Book
+4.Order food
+5.Checkout
+6.Exit
+ 2
+
+Choose room type :
+1. Luxury Double Room
+2.Deluxe Double Room
+3. Luxury Single Room
+4.Deluxe Single Room
+4
+Number of rooms available : 20
+Continue : (y/n)
+ y
+
+Enter your choice :
+1. Display room details
+2. Display room availability
+3. Book
+4. Order food
+5. Checkout
+6. Exit
+ 3
+
+Choose room type :
+1. Luxury Double Room
+2. Deluxe Double Room
+3. Luxury Single Room
+4.Deluxe Single Room
+ 1
+
+Choose room number from :
+1,2,3,4,5,6,7,8,9,10,
+Enter room number: 9
+Enter customer name: Ghulam Murtaza
+Enter contact number: 120 411 8730
+
+Enter your choice :
+1. Storing Customer Details
+2. Searching Customer Details
+3. Upgrade and delete details
+4. Booking or upgrading room
+5. Ordering Food for Particular Room
+6. Check out for customer and showing bill
+
+--- GRADE CRITERIA ------------------------------------------
+For ”G” You have to cover minimum
+objektive for course.
+ Classes
+ Collections or Arrays
+ Exceptions
+ Java 8 features (Lambda, Stream, Method Reference)
+ Next Level I/O hantering with Files or database.
+ For ”VG” You have to cover some extra topics like generic methods or generic classes.
+ Some Extra feature to make your user interface secure and maintainable like
+    save customer data in both file and database.
+
+--- DEADLINE -----------------------------------------------
+ First Presentation 08 Feb 2021
+ Second Presentation 09 Feb 2021
+ Late Submission only Get ”G” and dedline for late submission will follow soon.
+
+--- HOW TO SUBMIT? -----------------------------------------
+ You have to present your code on teams
+ Two chances to present.
+
+ Lycka till
+
+Copyright(2021) Ghulam Murtaza
+*/
