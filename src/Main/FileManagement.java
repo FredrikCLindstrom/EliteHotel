@@ -55,6 +55,9 @@ public class FileManagement {
     public static void main(String[] args) throws IOException { //TODO: REMOVE main method in the class, only for testpurposes
         Guest guest1 = new Guest("Arne", "persson");// Test guest för utskrifts formatet bara
 
+        HotelManagementSystem.allRoomsList.stream().filter(e->e.getGuest()!=null).
+                forEach(System.out::println);
+        
         FileManagement.printToTextDoc(guest1); //this is the method to be called on checkout. 
 
     }
