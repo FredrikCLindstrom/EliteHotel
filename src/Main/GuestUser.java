@@ -97,6 +97,7 @@ public class GuestUser {
                     break;
                 case GUEST_MENU_______BOOK_ROOM:
                     bookRoom();
+                    break;
                 case GUEST_MENU______ORDER_FOOD:
                 case GUEST_MENU________CHECKOUT:
                     System.out.println(TODO_COLOR + "TODO: Handle choice " + userMenuChoice.getMenuChoiceChar() + ", " + userMenuChoice.getMenuChoiceText() + RESET_COLOR);
