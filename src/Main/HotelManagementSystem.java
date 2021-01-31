@@ -80,6 +80,7 @@ public class HotelManagementSystem {
     public static void main(String[] args) {
 
         addRoomsToLists();
+        GuestUser.addSomePeopleToRooms();
         //Hotel thisHotel = new Hotel();
         UseAsGuestOrReceptionist();
 
