@@ -1,0 +1,10 @@
+
+
+	Receipt for Guest 
+
+	NAME: Arne persson 
+	Room: 11 singleDeluxe 
+	For: 3 Nigths 
+	Total Price: 4500 
+
+	Welcome Back

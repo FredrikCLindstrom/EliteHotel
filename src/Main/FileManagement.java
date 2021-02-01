@@ -13,21 +13,34 @@ public class FileManagement {
         this.path = filePath;
     }
 
-    public static void printToTextDoc(Guest guest) throws IOException {
-
-        String firstName = guest.getFirstName();
-        String lastName = guest.getLastName();
+    public static void printToTextDoc(int roomNumber) throws IOException {
+        String firstName="";
+        String lastName = "";
+        String typeOfRoomString="";
+        int pricePerNight=0;
+        int numberOfNights=0;
+        for (Room room : HotelManagementSystem.allRoomsList) {
+            if (room.roomNr==roomNumber) {
+                System.out.println("CheckOut this guest");
+                
+                typeOfRoomString=room.getName();
+                Guest guestToCheckOut=room.getGuest();
+                pricePerNight=room.getChargePerDay();
+                firstName = guestToCheckOut.getFirstName();
+                lastName = guestToCheckOut.getLastName();
+                numberOfNights=guestToCheckOut.getNumberOfNights();
+            }
+        }
+        
+        
+        
         String fullName = firstName + "_" + lastName;
 
-        //TODO: get amount of nights and price. 
-        String testString1 = "\n\n\tReceipt for Guest \n\n\tNAME: getFirstNames() + getLastName() \n\tRoom:getRoomNr() getRoomType() \n\tFor: getAmountOfNights() Nigths \n"
-                + "\tTotal Price: getPrice() \n\n\tWelcome Back";
+        //TODO: get amount of nights and price. and gångra nights * price per night
+        
 
-        String testString2 = "\n\n\tReceipt for Guest \n\n\tNAME: Björn Andersson \n\tRoom: 11 singleDeluxe \n\tFor: 3 Nigths \n"
-                + "\tTotal Price: 4500 \n\n\tWelcome Back";
-
-        String testString3 = "\n\n\tReceipt for Guest \n\n\tNAME: " + firstName + " " + lastName + " \n\tRoom: 11 singleDeluxe \n\tFor: 3 Nigths \n"
-                + "\tTotal Price: 4500 \n\n\tWelcome Back";
+        String testString3 = "\n\n\tReceipt for Guest \n\n\tNAME: " + firstName + " " + lastName + " \n\tRoom: "+roomNumber+" "+typeOfRoomString+"\n\tFor: "+numberOfNights+" Nights \n"
+                + "\tTotal Price: "+pricePerNight*numberOfNights+" \n\n\tWelcome Back";
 
         try {
             FileManagement data = new FileManagement("kvitto" + fullName + ".txt");
@@ -52,10 +65,5 @@ public class FileManagement {
 
     }
 
-    public static void main(String[] args) throws IOException { //TODO: REMOVE main method in the class, only for testpurposes
-        Guest guest1 = new Guest("Arne", "persson");// Test guest för utskrifts formatet bara
-
-        FileManagement.printToTextDoc(guest1); //this is the method to be called on checkout. 
-
-    }
+   
 }

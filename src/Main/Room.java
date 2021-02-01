@@ -22,7 +22,7 @@ public class Room {
     public int getRoomNr() {
         return roomNr;
     }
-
+    
     public String getName() {
         return name;
     }

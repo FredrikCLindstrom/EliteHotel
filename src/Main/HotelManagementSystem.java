@@ -80,6 +80,7 @@ public class HotelManagementSystem {
     public static void main(String[] args) {
 
         addRoomsToLists();
+        GuestUser.addSomePeopleToRooms();
         //Hotel thisHotel = new Hotel();
         UseAsGuestOrReceptionist();
 
@@ -227,13 +228,13 @@ public class HotelManagementSystem {
         for (Room room : testingRoomList) {
             i++;
             if(i%2==0){
-                room.guest=new Guest(firstNames[i],lastNames[i]);
+                room.guest=new Guest(firstNames[i],lastNames[i],2);
             }
         }
         testingRoomList.stream().forEach(e->System.out.println(e.toString()));
         System.out.println("test for occupied rooms");
         testingRoomList.stream().filter(e->e.guest!=null).forEach(e->System.err.println("Room Number:"+e.roomNr+" "+e.name+" is occupied"));
-        FileManagement.printToTextDoc(testingRoomList.get(3).getGuest());
+        //FileManagement.printToTextDoc(testingRoomList.get(3).getGuest());
         
     }
     
