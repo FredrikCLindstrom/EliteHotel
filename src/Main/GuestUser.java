@@ -1,9 +1,12 @@
 package Main;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import static java.util.stream.Collectors.toList;
+
 
 public class GuestUser {
 
@@ -100,6 +103,11 @@ public class GuestUser {
                     break;
                 case GUEST_MENU______ORDER_FOOD:
                 case GUEST_MENU________CHECKOUT:
+                    try {
+                        checkOutprint();
+                    } catch (IOException e) {
+                    }
+                    
                     System.out.println(TODO_COLOR + "TODO: Handle choice " + userMenuChoice.getMenuChoiceChar() + ", " + userMenuChoice.getMenuChoiceText() + RESET_COLOR);
                     break;
 
@@ -230,9 +238,9 @@ public class GuestUser {
     }
     
     public static void addSomePeopleToRooms(){ //TODO: REMOVE, just testing with this
-        Guest testGuest1= new Guest("hasse","olofsson");
-        Guest testGuest2= new Guest("maja","kennethsson");
-        Guest testGuest3= new Guest("samuel","lavasani");
+        Guest testGuest1= new Guest("hasse","olofsson",2);
+        Guest testGuest2= new Guest("maja","kennethsson",5);
+        Guest testGuest3= new Guest("samuel","lavasani",2);
         for (Room room : HotelManagementSystem.allRoomsList) {
             if(room.roomNr==2){
                 room.setGuest(testGuest1);
@@ -255,14 +263,36 @@ public class GuestUser {
     
     private static void createGuestAndAddToRoom(int roomChoice){
         
+        
         System.out.println("Enter your first Name");
         String firstName=Input.getUserInputString();
         System.out.println("Enter your last Name");
         String lastName=Input.getUserInputString();
+        System.out.println("How many Nights do you want to stay?");
+        int numberOfNights=Input.getUserInputInt();
         
-        Guest guestCreate=new Guest(firstName,lastName);
+        LocalDate today= LocalDate.now();
+        LocalDate checkOut= today.plusDays(numberOfNights);
+        
+        System.out.println("Guest :"+firstName+" "+lastName+", check in: "+today+" check out : "+checkOut);
+        
+        Guest guestCreate=new Guest(firstName,lastName,numberOfNights);
         HotelManagementSystem.allRoomsList.stream().filter(e->e.getRoomNr()==(roomChoice)).forEach(e->e.setGuest(guestCreate));
         
+    }
+    
+    private static void checkOutprint() throws IOException{
+         HotelManagementSystem.allRoomsList.stream().filter(e->e.getGuest()!=null).
+                forEach(System.out::println);
+        
+        System.out.println("What room number do you wish to check out?");
+        
+        int choice=Input.getUserInputInt();
+        
+        //add a check that someone actually live in the room. if not dont print kvitto and dont remove.
+        
+        FileManagement.printToTextDoc(choice); //this is the method to be called on checkout. 
+        HotelManagementSystem.allRoomsList.stream().filter(e->e.getRoomNr()==choice).forEach(e->e.setGuest(null));//sets roomnr to null guest
     }
 }
 
