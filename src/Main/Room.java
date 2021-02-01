@@ -12,6 +12,7 @@ public class Room {
     public boolean acEquipped;
     public boolean breakfastIncluded;
     public int chargePerDay;
+    public int rankingPoints;
 
     public Guest guest;
 
@@ -48,6 +49,10 @@ public class Room {
     }
 
     public Guest getGuest() {
+        return guest;
+    }
+    
+    public Guest getRankingPoints() {
         return guest;
     }
 
