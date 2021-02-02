@@ -54,7 +54,7 @@ public class FileManagement {
             extrasToReceipt=foodForRoom;
         }
 
-        String testString3 = "\n\n\tReceipt for Guest \n\n\tNAME: " + firstName + " " + lastName + " \n\tRoom: "+roomNumber+" "+typeOfRoomString+"\n\tFor: "+numberOfNights+" Nights \n"
+        String testString3 = "\n\n\tReceipt for Guest \n\n\tNAME: " + firstName + " " + lastName + " \n\tRoom: "+roomNumber+" "+typeOfRoomString+"\n\tFor: "+numberOfNights+" Nights ["+pricePerNight+" * "+numberOfNights+"] \n"
                 + "\tPrice: "+pricePerNight*numberOfNights+"\n\tExtras: "+extrasToReceipt +"\n\tTotal Cost: "+((pricePerNight*numberOfNights)+totalCostOfFood)+"\n\n\tWelcome Back";
 
         try {
@@ -67,6 +67,7 @@ public class FileManagement {
         System.out.println("Receipt sent to printer");
         removeRoomFromFoodList(roomNumber);
         removeGuestFroomRoomArrayList(roomNumber);
+        System.out.println(Misc.GREEN+"Guest: "+firstName+" "+ lastName+" has been checked out");
 
     }
 

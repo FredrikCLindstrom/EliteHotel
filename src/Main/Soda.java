@@ -9,5 +9,10 @@ public class Soda extends Food{
         this.name="Soda";
         this.cost=30;
     }
+
+    public Soda() {
+        this.name="Soda";
+        this.cost=30;
+    }
     
 }
