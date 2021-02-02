@@ -82,8 +82,8 @@ public class Room implements Ranking, Rankable<Room> {
         if (this.roomNr % 2 == 0) { // Even room numbers are on the backside, and hava a slightly better view
             returnValue += 200;
         }
-        // The corner rooms with an extra window:
-        if ((this.roomNr == 1) || (this.roomNr == 2) || (this.roomNr == 9) || (this.roomNr == 10)) {
+        // The corner rooms (first and last two room numbers) with an extra window:
+        if (this.roomNr == 1 || this.roomNr == 2 || this.roomNr == (firstFreeRoomNr-1) || this.roomNr == (firstFreeRoomNr-2)) {
                    returnValue += 300;
         }
         if (this.roomNr == 4) { // The room under the AC unit:
@@ -91,7 +91,9 @@ public class Room implements Ranking, Rankable<Room> {
         }
         if (this.roomNr == 7) { // The stain in the carpet is still slightly visible:
             returnValue -= 80;
-        }
+        }  
+        returnValue -= (5 * Math.abs(this.roomNr - 7)); // Adjusting for distance from the Reception:
+        
         return returnValue;
     }  
     
