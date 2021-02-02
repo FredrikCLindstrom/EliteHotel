@@ -14,6 +14,11 @@ public class Food {
         
     }
 
+    public Food() {
+    }
+
+    
+    
     public int getRoomNr() {
         return roomNr;
     }

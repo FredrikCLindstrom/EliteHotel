@@ -13,6 +13,7 @@ public class HotelManagementSystem {
     static List<Room> emptyRoomsList = new ArrayList<>();
     static List<Room> testingRoomList = new ArrayList<>();
     static List<Food> foodList = new ArrayList<>();
+    static List<Food> foodMenu = new ArrayList<>();
     
     public static final String MENU_COLOR = Misc.CYAN;
     public static final String CHOICE_COLOR = Misc.YELLOW;
@@ -80,6 +81,7 @@ public class HotelManagementSystem {
     }
 
     public static void main(String[] args) {
+        addMenuItemsToMenu();
         GuestUser.addSomeFodTestMethod();//lägger till 2 foods på rum 14
         addRoomsToLists();
         GuestUser.addSomePeopleToRooms();//lägger till 3 gäster i hotellet vid start
@@ -239,7 +241,14 @@ public class HotelManagementSystem {
         //FileManagement.printToTextDoc(testingRoomList.get(3).getGuest());
         
     }
-    
+    private static void addMenuItemsToMenu(){
+        Food soda=new Soda();
+        Food sandwich = new Sandwich();
+        Food noodles = new Noodles();
+        foodMenu.add(soda);
+        foodMenu.add(sandwich);
+        foodMenu.add(noodles);
+    }
     
 }
 
@@ -379,7 +388,9 @@ objektive for course.
  Collections or Arrays
  Exceptions
  Java 8 features (Lambda, Stream, Method Reference)
- Next Level I/O hantering with Files or database.
+ Nr ”VG” You have to cover some extra topics like generic methods or generic classes.
+ Some Extra feature to make your user interface secure and maintainable like
+    save customer data in both file and database.ext Level I/O hantering with Files or database.
  For ”VG” You have to cover some extra topics like generic methods or generic classes.
  Some Extra feature to make your user interface secure and maintainable like
     save customer data in both file and database.

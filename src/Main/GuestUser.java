@@ -87,7 +87,7 @@ public class GuestUser {
 
         do {
             // Show the menu choices, and get a valid choice from the user
-            userMenuChoice = getGuestMenuChoice("What do you want to do? ");
+            userMenuChoice = getGuestMenuChoice(Misc.GREEN+"--What do you want to do?-- "+Misc.RESET);
 
             switch (userMenuChoice) {
                 case GUEST_MENU___DISPLAY_ROOMS:
@@ -102,18 +102,29 @@ public class GuestUser {
                     bookRoom();
                     break;
                 case GUEST_MENU______ORDER_FOOD:
+                    if (checkThatThereAreGuestsThatCanCheckOut()==true) {
+                        try {
+                        orderFoodForTheRoom();
+                    } catch (Exception e) {
+                            System.err.println("food error occured");
+                    }
+                    }else{
+                        System.err.println("No Guests in rooms to to order");
+                    }
+                    break;
                 case GUEST_MENU________CHECKOUT:
                     if (checkThatThereAreGuestsThatCanCheckOut()==true) {
                         try {
                         checkOutprint();
                     } catch (IOException e) {
+                            System.err.println("I/O exception error occured");
                     }
                     }else{
                         System.err.println("No Guests to CheckOut");
                     }
                     
                     
-                    System.out.println(TODO_COLOR + "TODO: Handle choice " + userMenuChoice.getMenuChoiceChar() + ", " + userMenuChoice.getMenuChoiceText() + RESET_COLOR);
+                    
                     break;
 
                 case GUEST_MENU___HIDDEN_CHOICE:
@@ -184,7 +195,7 @@ public class GuestUser {
     }
     
     private static void emptyRooms(){
-        System.out.println(Misc.GREEN+"EMPTY ROOMS"+Misc.RESET); //TODO: REMOVE THIS
+        System.out.println(Misc.GREEN+"EMPTY ROOMS"+Misc.RESET); 
         HotelManagementSystem.emptyRoomsList.clear();
         HotelManagementSystem.emptyRoomsList=
                 HotelManagementSystem.allRoomsList.
@@ -204,7 +215,7 @@ public class GuestUser {
         roomNumberChoice=chooseRoomNumberToBook();
             
             if (!listNonOccupiedRooms.contains(roomNumberChoice)) {
-                System.out.println("Room is not available");
+                System.err.println("Room is not available");
             }
         } while (!listNonOccupiedRooms.contains(roomNumberChoice));
         
@@ -336,6 +347,80 @@ public class GuestUser {
             moreThanZeroGuests=true;
         }
         return moreThanZeroGuests;
+    }
+    
+    public static void orderFoodForTheRoom(){
+        int choice;
+        int roomNumber;
+
+        choice = orderWhat();
+
+        if (choice <= HotelManagementSystem.foodMenu.size()) {
+            roomNumber = enterRoomNUmberForFood();
+
+            switch (choice) {
+                case 1:
+                    Food soda = new Soda(roomNumber);
+                    HotelManagementSystem.foodList.add(soda);
+                    break;
+                case 2:
+                    Food sandwich = new Sandwich(roomNumber);
+                    HotelManagementSystem.foodList.add(sandwich);
+                    break;
+                case 3:
+                    Food noodles = new Noodles(roomNumber);
+                    HotelManagementSystem.foodList.add(noodles);
+                    break;//add case 4 if added food to menu
+                default:
+                    break;
+            }
+
+        }else{
+            System.out.println("Ok, nothing ordered");
+        }
+    }
+    
+    public static int orderWhat(){
+        int num=1;
+        System.out.println("--What would you like to order?--");
+        for (Food food : HotelManagementSystem.foodMenu) {
+            System.out.println(num+": "+food.forReceiptPrintOut());
+            num++;
+        }
+        
+        System.out.println(num+": Nothing, i dont want anything");
+        int choice=Input.getUserInputInt();
+        
+        return choice;
+    }
+    
+    public static int enterRoomNUmberForFood() {
+        boolean roomHasGuest = false;
+        boolean roomExistInlist=false;
+        int roomNumber=0;
+        
+        while (roomHasGuest == false) {
+
+            System.out.println("--What is your room number?--");
+            roomNumber = Input.getUserInputInt();
+
+            for (Room room : HotelManagementSystem.allRoomsList) {
+                if (room.getRoomNr() == roomNumber) {
+                    roomExistInlist=true;
+                    if (room.guest != null) {
+                        System.out.println("Room Number: " + room.getRoomNr() + " " + room.guest.getFirstName() + " " + room.guest.getLastName());
+                        roomHasGuest=true;
+                    } else {
+                        System.err.println("Room Number: " + room.getRoomNr() + " is Empty");
+                    }
+
+                } 
+            }
+            if (roomExistInlist==false) {
+                System.err.println("Room does not exist");}
+            
+        }
+        return roomNumber;
     }
 }
 
