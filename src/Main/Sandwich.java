@@ -9,5 +9,10 @@ public class Sandwich extends Food{
         this.name = "Sandwich";
         this.cost = 100;
     }
+
+    public Sandwich() {
+        this.name = "Sandwich";
+        this.cost = 100;
+    }
     
 }
