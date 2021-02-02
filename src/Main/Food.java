@@ -2,7 +2,7 @@
 package Main;
 
 
-public class Food {
+public class Food implements Ranking, Rankable<Food> {
     
     public int roomNr;
     public String name;
@@ -51,6 +51,9 @@ public class Food {
     public String forReceiptPrintOut() {
         return "Food "+ name + ", cost: " + cost;
     }
-    
-    
+       
+    public int rankingPoints() { // Ranking points based on room numbers/location, adjustments for type/klass of room can be made in subclasses
+        return 1000 ; // Base value to be adjusted by subclasses
+    }  
+       
 }
