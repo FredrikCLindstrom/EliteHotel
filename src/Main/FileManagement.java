@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
 public class FileManagement {
 
     private String path;
@@ -17,11 +18,13 @@ public class FileManagement {
         String firstName="";
         String lastName = "";
         String typeOfRoomString="";
+        String foodForRoom="";
+        int totalCostOfFood=0;
         int pricePerNight=0;
         int numberOfNights=0;
         for (Room room : HotelManagementSystem.allRoomsList) {
             if (room.roomNr==roomNumber) {
-                System.out.println("CheckOut this guest");
+                
                 
                 typeOfRoomString=room.getName();
                 Guest guestToCheckOut=room.getGuest();
@@ -32,24 +35,38 @@ public class FileManagement {
             }
         }
         
+        for (Food food : HotelManagementSystem.foodList) {
+            if(food.getRoomNr()==roomNumber){
+                String foodinLoop=food.getName()+" "+food.getCost()+" ";
+                foodForRoom=foodForRoom+foodinLoop;
+                totalCostOfFood=totalCostOfFood+food.getCost();
+            }
+        }
         
         
         String fullName = firstName + "_" + lastName;
-
-        //TODO: get amount of nights and price. and gångra nights * price per night
         
+        String extrasToReceipt="";
+        
+        if (totalCostOfFood<1) {
+            extrasToReceipt="None";
+        }else{
+            extrasToReceipt=foodForRoom;
+        }
 
         String testString3 = "\n\n\tReceipt for Guest \n\n\tNAME: " + firstName + " " + lastName + " \n\tRoom: "+roomNumber+" "+typeOfRoomString+"\n\tFor: "+numberOfNights+" Nights \n"
-                + "\tTotal Price: "+pricePerNight*numberOfNights+" \n\n\tWelcome Back";
+                + "\tPrice: "+pricePerNight*numberOfNights+"\n\tExtras: "+extrasToReceipt +"\n\tTotal Cost: "+((pricePerNight*numberOfNights)+totalCostOfFood)+"\n\n\tWelcome Back";
 
         try {
-            FileManagement data = new FileManagement("kvitto" + fullName + ".txt");
+            FileManagement data = new FileManagement("kvitto_" + fullName + ".txt");
             data.writeToFile(testString3);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Something went wrong trying to print receipt");
         }
 
         System.out.println("Receipt sent to printer");
+        removeRoomFromFoodList(roomNumber);
+        removeGuestFroomRoomArrayList(roomNumber);
 
     }
 
@@ -63,6 +80,18 @@ public class FileManagement {
 
         print_line.close();
 
+    }
+    
+    private static void removeRoomFromFoodList(int roomNumber){
+        
+        HotelManagementSystem.foodList.removeIf(e->e.getRoomNr()==roomNumber);
+        
+    }
+    
+    private static void removeGuestFroomRoomArrayList(int roomNumber){
+        
+        HotelManagementSystem.allRoomsList.stream().filter(e->e.getRoomNr()==roomNumber).forEach(e->e.setGuest(null));
+        
     }
 
    

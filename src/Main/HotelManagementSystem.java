@@ -1,5 +1,6 @@
 package Main;
 
+import static Main.GuestUser.addSomeFodTestMethod;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,8 @@ public class HotelManagementSystem {
     static List<Room> diffrentTypeOfRoomsList = new ArrayList<>();
     static List<Room> emptyRoomsList = new ArrayList<>();
     static List<Room> testingRoomList = new ArrayList<>();
-
+    static List<Food> foodList = new ArrayList<>();
+    
     public static final String MENU_COLOR = Misc.CYAN;
     public static final String CHOICE_COLOR = Misc.YELLOW;
     public static final String ERROR_COLOR = Misc.RED;
@@ -78,9 +80,9 @@ public class HotelManagementSystem {
     }
 
     public static void main(String[] args) {
-
+        GuestUser.addSomeFodTestMethod();//lägger till 2 foods på rum 14
         addRoomsToLists();
-        GuestUser.addSomePeopleToRooms();
+        GuestUser.addSomePeopleToRooms();//lägger till 3 gäster i hotellet vid start
         //Hotel thisHotel = new Hotel();
         UseAsGuestOrReceptionist();
 
