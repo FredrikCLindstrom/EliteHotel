@@ -52,7 +52,7 @@ public class Food implements Ranking, Rankable<Food> {
         return "Food "+ name + ", cost: " + cost;
     }
        
-    public int rankingPoints() { // Ranking points based on room numbers/location, adjustments for type/klass of room can be made in subclasses
+    public int rankingPoints() { // Higher ranking points are better
         return 1000 ; // Base value to be adjusted by subclasses
     }  
        
