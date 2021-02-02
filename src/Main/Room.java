@@ -1,6 +1,6 @@
 package Main;
 
-public class Room {
+public class Room implements Ranking, Rankable<Room> {
 
     public static int firstFreeRoomNr = 1;
 
@@ -23,7 +23,7 @@ public class Room {
     public int getRoomNr() {
         return roomNr;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -51,7 +51,7 @@ public class Room {
     public Guest getGuest() {
         return guest;
     }
-    
+
     public Guest getRankingPoints() {
         return guest;
     }
@@ -62,16 +62,37 @@ public class Room {
         str += (this.acEquipped ? "AC, " : "no AC, ");
         str += (this.breakfastIncluded ? "breakfast included, " : "no breakfast, ");
         str += "cost " + chargePerDay + ", ";
-        str += (this.guest != null) ? guest.toString(): "unoccupied";
+        str += (this.guest != null) ? guest.toString() : "unoccupied";
         return str;
     }
-    
-    public String descriptionOfRooms(){
+
+    public String descriptionOfRooms() {
         String str = this.name + ", " + this.beds + " " + this.bedName + ", ";
         str += (this.acEquipped ? "AC, " : "no AC, ");
         str += (this.breakfastIncluded ? "breakfast included, " : "no breakfast, ");
         str += "cost " + chargePerDay + ", ";
-        
+
         return str;
     }
+
+    public int rankingPoints() { // Ranking points based on room numbers/location, adjustments for type/klass of room can be made in subclasses
+        
+        int returnValue = 1000; // Base value to be adjusted
+        
+        if (this.roomNr % 2 == 0) { // Even room numbers are on the backside, and hava a slightly better view
+            returnValue += 200;
+        }
+        // The corner rooms with an extra window:
+        if ((this.roomNr == 1) || (this.roomNr == 2) || (this.roomNr == 9) || (this.roomNr == 10)) {
+                   returnValue += 300;
+        }
+        if (this.roomNr == 4) { // The room under the AC unit:
+            returnValue -= 150;
+        }
+        if (this.roomNr == 7) { // The stain in the carpet is still slightly visible:
+            returnValue -= 80;
+        }
+        return returnValue;
+    }  
+    
 }
