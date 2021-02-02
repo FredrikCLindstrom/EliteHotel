@@ -12,4 +12,13 @@ public class Misc {
     public static final String MAGENTA = "\u001b[35;1m";
     public static final String CYAN = "\u001b[36;1m";
     public static final String WHITE = "\u001b[37;1m";
+
+    public static final boolean DEBUG = true; // Enables debug output. TODO: turn it off in the end
+    
+    public static void printDebug(String str) {
+        if (DEBUG) {
+            System.out.println(MAGENTA + str + RESET);
+        }
+    }   
+    
 }

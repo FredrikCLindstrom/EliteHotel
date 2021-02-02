@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
 public class FileManagement {
 
     private String path;
@@ -13,30 +14,59 @@ public class FileManagement {
         this.path = filePath;
     }
 
-    public static void printToTextDoc(Guest guest) throws IOException {
-
-        String firstName = guest.getFirstName();
-        String lastName = guest.getLastName();
+    public static void printToTextDoc(int roomNumber) throws IOException {
+        String firstName="";
+        String lastName = "";
+        String typeOfRoomString="";
+        String foodForRoom="";
+        int totalCostOfFood=0;
+        int pricePerNight=0;
+        int numberOfNights=0;
+        for (Room room : HotelManagementSystem.allRoomsList) {
+            if (room.roomNr==roomNumber) {
+                
+                
+                typeOfRoomString=room.getName();
+                Guest guestToCheckOut=room.getGuest();
+                pricePerNight=room.getChargePerDay();
+                firstName = guestToCheckOut.getFirstName();
+                lastName = guestToCheckOut.getLastName();
+                numberOfNights=guestToCheckOut.getNumberOfNights();
+            }
+        }
+        
+        for (Food food : HotelManagementSystem.foodList) {
+            if(food.getRoomNr()==roomNumber){
+                String foodinLoop=food.getName()+" "+food.getCost()+" ";
+                foodForRoom=foodForRoom+foodinLoop;
+                totalCostOfFood=totalCostOfFood+food.getCost();
+            }
+        }
+        
+        
         String fullName = firstName + "_" + lastName;
+        
+        String extrasToReceipt="";
+        
+        if (totalCostOfFood<1) {
+            extrasToReceipt="None";
+        }else{
+            extrasToReceipt=foodForRoom;
+        }
 
-        //TODO: get amount of nights and price. 
-        String testString1 = "\n\n\tReceipt for Guest \n\n\tNAME: getFirstNames() + getLastName() \n\tRoom:getRoomNr() getRoomType() \n\tFor: getAmountOfNights() Nigths \n"
-                + "\tTotal Price: getPrice() \n\n\tWelcome Back";
-
-        String testString2 = "\n\n\tReceipt for Guest \n\n\tNAME: Björn Andersson \n\tRoom: 11 singleDeluxe \n\tFor: 3 Nigths \n"
-                + "\tTotal Price: 4500 \n\n\tWelcome Back";
-
-        String testString3 = "\n\n\tReceipt for Guest \n\n\tNAME: " + firstName + " " + lastName + " \n\tRoom: 11 singleDeluxe \n\tFor: 3 Nigths \n"
-                + "\tTotal Price: 4500 \n\n\tWelcome Back";
+        String testString3 = "\n\n\tReceipt for Guest \n\n\tNAME: " + firstName + " " + lastName + " \n\tRoom: "+roomNumber+" "+typeOfRoomString+"\n\tFor: "+numberOfNights+" Nights \n"
+                + "\tPrice: "+pricePerNight*numberOfNights+"\n\tExtras: "+extrasToReceipt +"\n\tTotal Cost: "+((pricePerNight*numberOfNights)+totalCostOfFood)+"\n\n\tWelcome Back";
 
         try {
-            FileManagement data = new FileManagement("kvitto" + fullName + ".txt");
+            FileManagement data = new FileManagement("kvitto_" + fullName + ".txt");
             data.writeToFile(testString3);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Something went wrong trying to print receipt");
         }
 
         System.out.println("Receipt sent to printer");
+        removeRoomFromFoodList(roomNumber);
+        removeGuestFroomRoomArrayList(roomNumber);
 
     }
 
@@ -51,11 +81,18 @@ public class FileManagement {
         print_line.close();
 
     }
-
-    public static void main(String[] args) throws IOException { //TODO: REMOVE main method in the class, only for testpurposes
-        Guest guest1 = new Guest("Arne", "persson");// Test guest för utskrifts formatet bara
-
-        FileManagement.printToTextDoc(guest1); //this is the method to be called on checkout. 
-
+    
+    private static void removeRoomFromFoodList(int roomNumber){
+        
+        HotelManagementSystem.foodList.removeIf(e->e.getRoomNr()==roomNumber);
+        
     }
+    
+    private static void removeGuestFroomRoomArrayList(int roomNumber){
+        
+        HotelManagementSystem.allRoomsList.stream().filter(e->e.getRoomNr()==roomNumber).forEach(e->e.setGuest(null));
+        
+    }
+
+   
 }

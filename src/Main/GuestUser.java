@@ -1,7 +1,12 @@
 package Main;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import static java.util.stream.Collectors.toList;
+
 
 public class GuestUser {
 
@@ -86,14 +91,28 @@ public class GuestUser {
 
             switch (userMenuChoice) {
                 case GUEST_MENU___DISPLAY_ROOMS:
-                    ShowAllRooms();
+                    
                     diffrentTypesOfRoomsDescription();
-                    emptyRooms();
-                    HotelManagementSystem.testingMethod();
+                    break;
+                    
                 case GUEST_MENU_AVAILABLE_ROOMS:
+                    emptyRooms();
+                    break;
                 case GUEST_MENU_______BOOK_ROOM:
+                    bookRoom();
+                    break;
                 case GUEST_MENU______ORDER_FOOD:
                 case GUEST_MENU________CHECKOUT:
+                    if (checkThatThereAreGuestsThatCanCheckOut()==true) {
+                        try {
+                        checkOutprint();
+                    } catch (IOException e) {
+                    }
+                    }else{
+                        System.err.println("No Guests to CheckOut");
+                    }
+                    
+                    
                     System.out.println(TODO_COLOR + "TODO: Handle choice " + userMenuChoice.getMenuChoiceChar() + ", " + userMenuChoice.getMenuChoiceText() + RESET_COLOR);
                     break;
 
@@ -153,17 +172,19 @@ public class GuestUser {
     }
 
     private static void ShowAllRooms(){
-        System.out.println("ALL ROOMS"); //TODO: REMOVE THIS
+        System.out.println("ALL ROOMS"); 
         HotelManagementSystem.allRoomsList.stream().forEach(e->System.out.println(e.toString()));
     }
     
     private static void diffrentTypesOfRoomsDescription(){
-        System.out.println("DIFFRENT TYPE OF ROOMS");
-        HotelManagementSystem.diffrentTypeOfRoomsList.stream().forEach(e->System.out.println(e.descriptionOfRooms()));
+        System.out.println(Misc.GREEN+"DIFFRENT TYPE OF ROOMS"+Misc.RESET);
+        System.out.println(Misc.GREEN+"*************************************************************"+Misc.GREEN+"\n");
+        HotelManagementSystem.diffrentTypeOfRoomsList.stream().forEach(e->System.out.println(e.descriptionOfRooms()+"\n"));
+        System.out.println(Misc.GREEN+"*************************************************************"+Misc.GREEN);
     }
     
     private static void emptyRooms(){
-        System.out.println("EMPTY ROOMS"); //TODO: REMOVE THIS
+        System.out.println(Misc.GREEN+"EMPTY ROOMS"+Misc.RESET); //TODO: REMOVE THIS
         HotelManagementSystem.emptyRoomsList.clear();
         HotelManagementSystem.emptyRoomsList=
                 HotelManagementSystem.allRoomsList.
@@ -174,4 +195,147 @@ public class GuestUser {
         HotelManagementSystem.emptyRoomsList.stream().forEach(System.out::println);
     }
     
+    private static void bookRoom(){
+        List<Integer> listNonOccupiedRooms=new ArrayList<>();
+        int roomNumberChoice;
+        do {            
+            listNonOccupiedRooms=availableSSRoomsWithRoomNumber();
+        
+        roomNumberChoice=chooseRoomNumberToBook();
+            
+            if (!listNonOccupiedRooms.contains(roomNumberChoice)) {
+                System.out.println("Room is not available");
+            }
+        } while (!listNonOccupiedRooms.contains(roomNumberChoice));
+        
+        createGuestAndAddToRoom(roomNumberChoice);
+        
+    }
+    
+    private static List<Integer> availableSSRoomsWithRoomNumber() {
+
+        List<Class> roomTypeArrayList = new ArrayList<>();
+        roomTypeArrayList.add(StandardSingleRoom.class);
+        roomTypeArrayList.add(StandardDoubleRoom.class);
+        roomTypeArrayList.add(LuxurySingleRoom.class);
+        roomTypeArrayList.add(LuxuryDoubleRoom.class);
+        List<Integer> newListOfAvailRoomsOfCertainClass = new ArrayList<Integer>();
+        List<Integer> listToReturnAllNonOccupied = new ArrayList<Integer>();
+        for (Class thisClass : roomTypeArrayList) {
+
+            long availableNumberOfRooms = HotelManagementSystem.allRoomsList.stream().
+                    filter(e -> e.guest == null).
+                    filter(e -> e.getClass().equals(thisClass)).count();
+
+            newListOfAvailRoomsOfCertainClass = HotelManagementSystem.allRoomsList.stream().
+                    filter(e -> e.guest == null).
+                    filter(e -> e.getClass().equals(thisClass)).map(e -> e.getRoomNr()).collect(toList());
+
+            String bedRoomName = thisClass.getTypeName();
+            String useThisNameForPrintOut = bedRoomName.substring(5);
+
+            System.out.println(Misc.GREEN+useThisNameForPrintOut + " available : " + availableNumberOfRooms+Misc.GREEN);
+
+            for (Integer roomNr : newListOfAvailRoomsOfCertainClass) {
+                System.out.println("Room Number :" + roomNr);
+            }
+          listToReturnAllNonOccupied.addAll(newListOfAvailRoomsOfCertainClass);
+        }
+        return listToReturnAllNonOccupied;
+    }
+    
+    public static void addSomePeopleToRooms(){ //TODO: REMOVE, just testing with this
+        Guest testGuest1= new Guest("hasse","olofsson",2);
+        Guest testGuest2= new Guest("maja","kennethsson",5);
+        Guest testGuest3= new Guest("samuel","lavasani",2);
+        for (Room room : HotelManagementSystem.allRoomsList) {
+            if(room.roomNr==2){
+                room.setGuest(testGuest1);
+            }
+            if(room.roomNr==6){
+                room.setGuest(testGuest2);
+            }
+            if(room.roomNr==14){
+                room.setGuest(testGuest3);
+            }
+        }
+    }
+    private static int chooseRoomNumberToBook(){
+        
+        System.out.println(Misc.GREEN+"What room number would you like to book?"+Misc.RESET);
+        int choice=Input.getUserInputInt();
+        
+        return choice;
+    }
+    
+    private static void createGuestAndAddToRoom(int roomChoice){
+        
+        
+        System.out.println("Enter your first Name");
+        String firstName=Input.getUserInputString();
+        System.out.println("Enter your last Name");
+        String lastName=Input.getUserInputString();
+        System.out.println("How many Nights do you want to stay?");
+        int numberOfNights=Input.getUserInputInt();
+        
+        LocalDate today= LocalDate.now();
+        LocalDate checkOut= today.plusDays(numberOfNights);
+        
+        System.out.println("Guest :"+firstName+" "+lastName+", check in: "+today+" check out : "+checkOut);
+        
+        Guest guestCreate=new Guest(firstName,lastName,numberOfNights);
+        HotelManagementSystem.allRoomsList.stream().filter(e->e.getRoomNr()==(roomChoice)).forEach(e->e.setGuest(guestCreate));
+        
+    }
+    
+    private static void checkOutprint() throws IOException {
+        boolean roomHasGuest = false;
+        int choice=0;
+        System.out.println(Misc.GREEN + "---CHECKOUT SECTION---" + Misc.RESET);
+        HotelManagementSystem.allRoomsList.stream().filter(e -> e.getGuest() != null).
+                forEach(e -> System.out.println(e.roomNr + ": " + e.guest.getFirstName() + " " + e.guest.getLastName()));
+
+        while (roomHasGuest==false) {
+
+            System.out.println("What room number do you wish to check out?");
+            List<Integer> occupiedRoomsCheckoutCheck = new ArrayList<>();
+            for (Room room : HotelManagementSystem.allRoomsList) {
+                if (room.guest != null) {
+                    occupiedRoomsCheckoutCheck.add(room.getRoomNr());
+                }
+            }
+
+            choice = Input.getUserInputInt();
+
+            if (occupiedRoomsCheckoutCheck.contains(choice)) {
+                roomHasGuest = true;
+            } else {
+                roomHasGuest = false;
+                System.err.println("Room can NOT be checked out, try again please");
+            }
+        }
+        //add a check that someone actually live in the room. if not dont print kvitto and dont remove.
+
+        FileManagement.printToTextDoc(choice); //this is the method to be called on checkout. 
+
+    }
+    
+    public static void addSomeFodTestMethod(){
+        Food food1=new Sandwich(14);
+        Food food2 = new Soda(14);
+        HotelManagementSystem.foodList.add(food1);
+        HotelManagementSystem.foodList.add(food2);
+        
+    }
+    public static boolean checkThatThereAreGuestsThatCanCheckOut(){
+        long numberOfGuests=0;
+        boolean moreThanZeroGuests=false;
+        numberOfGuests=HotelManagementSystem.allRoomsList.stream().filter(e->e.guest!=null).count();
+        
+        if (numberOfGuests>0) {
+            moreThanZeroGuests=true;
+        }
+        return moreThanZeroGuests;
+    }
 }
+

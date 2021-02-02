@@ -1,5 +1,6 @@
 package Main;
 
+import static Main.GuestUser.addSomeFodTestMethod;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,8 @@ public class HotelManagementSystem {
     static List<Room> diffrentTypeOfRoomsList = new ArrayList<>();
     static List<Room> emptyRoomsList = new ArrayList<>();
     static List<Room> testingRoomList = new ArrayList<>();
-
+    static List<Food> foodList = new ArrayList<>();
+    
     public static final String MENU_COLOR = Misc.CYAN;
     public static final String CHOICE_COLOR = Misc.YELLOW;
     public static final String ERROR_COLOR = Misc.RED;
@@ -78,8 +80,9 @@ public class HotelManagementSystem {
     }
 
     public static void main(String[] args) {
-
+        GuestUser.addSomeFodTestMethod();//lägger till 2 foods på rum 14
         addRoomsToLists();
+        GuestUser.addSomePeopleToRooms();//lägger till 3 gäster i hotellet vid start
         //Hotel thisHotel = new Hotel();
         UseAsGuestOrReceptionist();
 
@@ -227,13 +230,13 @@ public class HotelManagementSystem {
         for (Room room : testingRoomList) {
             i++;
             if(i%2==0){
-                room.guest=new Guest(firstNames[i],lastNames[i]);
+                room.guest=new Guest(firstNames[i],lastNames[i],2);
             }
         }
         testingRoomList.stream().forEach(e->System.out.println(e.toString()));
         System.out.println("test for occupied rooms");
         testingRoomList.stream().filter(e->e.guest!=null).forEach(e->System.err.println("Room Number:"+e.roomNr+" "+e.name+" is occupied"));
-        FileManagement.printToTextDoc(testingRoomList.get(3).getGuest());
+        //FileManagement.printToTextDoc(testingRoomList.get(3).getGuest());
         
     }
     
