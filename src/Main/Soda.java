@@ -15,4 +15,10 @@ public class Soda extends Food{
         this.cost=30;
     }
     
+    @Override
+    public int rankingPoints() {
+        //Adjusting the ranking points set by the parent class (based on location mainly), with lots of points based on the class of room
+        return (super.rankingPoints() + 0);  
+    }
+    
 }
