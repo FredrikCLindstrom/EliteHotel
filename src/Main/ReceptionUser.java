@@ -1,6 +1,9 @@
 package Main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ReceptionUser {
 
@@ -102,9 +105,18 @@ public class ReceptionUser {
 
                 case RECEPTION_MENU____DELETE_GUEST:
                 case RECEPTION_MENU_______BOOK_ROOM:
+                    String theGuestString= "the Guest";
+                    String theGuestString2= "the Guests";
+                    GuestUser.bookRoom(theGuestString,theGuestString2);
+                    break;
                 case RECEPTION_MENU____UPGRADE_ROOM:
+                     upGradeRoomMethod();
+                     break;
                 case RECEPTION_MENU______ORDER_FOOD:
-                    System.out.println(TODO_COLOR + "TODO: Handle choice " + userMenuChoice.getMenuChoiceChar() + ", " + userMenuChoice.getMenuChoiceText()+ RESET_COLOR);
+                    String theGuestString1="the guest";
+                    GuestUser.orderFoodForTheRoom(theGuestString1);
+                    
+                    
                     break;
 
                 case RECEPTION_MENU_____HIDDEN_TEST:
@@ -162,4 +174,67 @@ public class ReceptionUser {
         return userMenuChoice;
     }
 
+    private static void upGradeRoomMethod(){
+        boolean roomHasGuest=false;
+        List<Room>cointainsGuestsList=new ArrayList<>();
+        System.out.println("--What room do you want to uppgrade/change--");
+        cointainsGuestsList = HotelManagementSystem.allRoomsList.stream().filter(e -> e.guest != null).collect(Collectors.toList());
+        //cointainsGuestsList=HotelManagementSystem.allRoomsList.stream().filter(e->e.guest!=null).forEach(e->System.out.println(e.getRoomNr()+" "+e.getName()+" "+e.guest.getFirstName()+"       "+e.guest.getLastName()));
+        cointainsGuestsList.stream().filter(e -> e.guest != null).forEach(e -> System.out.println(e.getRoomNr() + " " + e.getName() + "       " + e.guest.getFirstName() + " " + e.guest.getLastName()));
+
+        int choice = Input.getUserInputInt();
+
+        for (Room room : cointainsGuestsList) {
+            if (room.getRoomNr() == choice) {
+                roomHasGuest = true;
+            }
+
+        }
+
+        if (roomHasGuest==true) {
+            whatRoomToChangeTo(choice);
+        }else{
+            System.out.println("No one in that room");
+        }
+        
+    }
+    private static void whatRoomToChangeTo(int choice){
+        boolean okToChange=false;
+        Guest guestToMove=new Guest();
+        List<Room>availableToChangeToList=new ArrayList<>();
+        System.out.println("--What new room do you want to change the guest to?--");
+        HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).forEach(System.out::println);
+        availableToChangeToList=HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).collect((Collectors.toList()));
+        int newRoomNumber=Input.getUserInputInt();
+        
+        for (Room room : availableToChangeToList) {
+            if(room.getRoomNr()==newRoomNumber){
+                okToChange=true;
+            }
+        }
+        if (okToChange==true) {
+            
+            for (Room room : HotelManagementSystem.allRoomsList) {
+                if (room.getRoomNr()==choice) {
+                    guestToMove=room.guest;
+                    room.setGuest(null);
+                }
+            }
+            for (Room room : HotelManagementSystem.allRoomsList) {
+                if (room.getRoomNr()==newRoomNumber){
+                    room.setGuest(guestToMove);
+                }
+            }
+            for (Food food : HotelManagementSystem.foodList) {
+                if (food.getRoomNr()==choice) {
+                    food.setRoomNr(newRoomNumber);
+                    
+                }
+            }
+            System.out.println("--Guest moved from room "+choice+" to room "+newRoomNumber+"--");
+        }else {
+            System.err.println("--Can not change to that room--");
+        }
+        
+    }
 }

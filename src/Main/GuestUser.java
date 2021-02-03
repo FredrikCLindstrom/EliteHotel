@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 
@@ -99,12 +100,16 @@ public class GuestUser {
                     emptyRooms();
                     break;
                 case GUEST_MENU_______BOOK_ROOM:
-                    bookRoom();
+                    String youString="you";
+                    String yourString="your";
+                    
+                    bookRoom(youString,yourString);
                     break;
                 case GUEST_MENU______ORDER_FOOD:
+                    String youString2="you";
                     if (checkThatThereAreGuestsThatCanCheckOut()==true) {
                         try {
-                        orderFoodForTheRoom();
+                        orderFoodForTheRoom(youString2);
                     } catch (Exception e) {
                             System.err.println("food error occured");
                     }
@@ -206,20 +211,24 @@ public class GuestUser {
         HotelManagementSystem.emptyRoomsList.stream().forEach(System.out::println);
     }
     
-    private static void bookRoom(){
+    public static void bookRoom(String eitherGuestOrYou,String eitherGuestsOrYour){
         List<Integer> listNonOccupiedRooms=new ArrayList<>();
         int roomNumberChoice;
-        do {            
-            listNonOccupiedRooms=availableSSRoomsWithRoomNumber();
         
-        roomNumberChoice=chooseRoomNumberToBook();
+        do { 
+            
+            listNonOccupiedRooms=availableSSRoomsWithRoomNumber();
+            
+            
+            
+        roomNumberChoice=chooseRoomNumberToBook(eitherGuestOrYou);
             
             if (!listNonOccupiedRooms.contains(roomNumberChoice)) {
                 System.err.println("Room is not available");
             }
         } while (!listNonOccupiedRooms.contains(roomNumberChoice));
         
-        createGuestAndAddToRoom(roomNumberChoice);
+        createGuestAndAddToRoom(roomNumberChoice,eitherGuestOrYou,eitherGuestsOrYour);
         
     }
     
@@ -244,11 +253,12 @@ public class GuestUser {
 
             String bedRoomName = thisClass.getTypeName();
             String useThisNameForPrintOut = bedRoomName.substring(5);
-
+            
             System.out.println(Misc.GREEN+useThisNameForPrintOut + " available : " + availableNumberOfRooms+Misc.GREEN);
 
             for (Integer roomNr : newListOfAvailRoomsOfCertainClass) {
                 System.out.println("Room Number :" + roomNr);
+                
             }
           listToReturnAllNonOccupied.addAll(newListOfAvailRoomsOfCertainClass);
         }
@@ -271,22 +281,23 @@ public class GuestUser {
             }
         }
     }
-    private static int chooseRoomNumberToBook(){
-        
-        System.out.println(Misc.GREEN+"What room number would you like to book?"+Misc.RESET);
+    private static int chooseRoomNumberToBook(String eitherGuestOrYou){
+        List<Room>availableToChangeToList=HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).collect((Collectors.toList()));
+        Ranking.highestRanked(availableToChangeToList);
+        System.out.println(Misc.GREEN+"What room number would "+eitherGuestOrYou+" like to book?"+Misc.RESET);
         int choice=Input.getUserInputInt();
         
         return choice;
     }
     
-    private static void createGuestAndAddToRoom(int roomChoice){
+    private static void createGuestAndAddToRoom(int roomChoice, String eitherGuestOrYou,String eitherGuestsOrYour){
         
         
-        System.out.println("Enter your first Name");
+        System.out.println("Enter "+eitherGuestsOrYour+" first Name");
         String firstName=Input.getUserInputString();
-        System.out.println("Enter your last Name");
+        System.out.println("Enter "+eitherGuestsOrYour+" last Name");
         String lastName=Input.getUserInputString();
-        System.out.println("How many Nights do you want to stay?");
+        System.out.println("How many Nights do "+eitherGuestOrYou+" want to stay?");
         int numberOfNights=Input.getUserInputInt();
         
         LocalDate today= LocalDate.now();
@@ -325,7 +336,7 @@ public class GuestUser {
                 System.err.println("Room can NOT be checked out, try again please");
             }
         }
-        //add a check that someone actually live in the room. if not dont print kvitto and dont remove.
+        
 
         FileManagement.printToTextDoc(choice); //this is the method to be called on checkout. 
 
@@ -349,11 +360,11 @@ public class GuestUser {
         return moreThanZeroGuests;
     }
     
-    public static void orderFoodForTheRoom(){
+    public static void orderFoodForTheRoom(String YouOrTheGuest){
         int choice;
         int roomNumber;
 
-        choice = orderWhat();
+        choice = orderWhat(YouOrTheGuest);
 
         if (choice <= HotelManagementSystem.foodMenu.size()) {
             roomNumber = enterRoomNUmberForFood();
@@ -380,15 +391,15 @@ public class GuestUser {
         }
     }
     
-    public static int orderWhat(){
+    public static int orderWhat(String YouOrTheGuest){
         int num=1;
-        System.out.println("--What would you like to order?--");
+        System.out.println("--What would "+YouOrTheGuest+" like to order?--");
         for (Food food : HotelManagementSystem.foodMenu) {
             System.out.println(num+": "+food.forReceiptPrintOut());
             num++;
         }
         
-        System.out.println(num+": Nothing, i dont want anything");
+        System.out.println(num+": Go Back");
         int choice=Input.getUserInputInt();
         
         return choice;
@@ -401,7 +412,7 @@ public class GuestUser {
         
         while (roomHasGuest == false) {
 
-            System.out.println("--What is your room number?--");
+            System.out.println("--please enter room number--");
             roomNumber = Input.getUserInputInt();
 
             for (Room room : HotelManagementSystem.allRoomsList) {

@@ -12,7 +12,7 @@ public interface Ranking {
                 highestRanked = t;
             }
         }
-        Misc.printDebug("Highest ranking points is " + highestRanked.rankingPoints() + " for: " + highestRanked.toString());
+        Misc.printDebug("Highest ranking points of " + highestRanked.getClass() + " is " + highestRanked.rankingPoints() + " for: " + highestRanked.toString());
 
         return highestRanked;
     }
