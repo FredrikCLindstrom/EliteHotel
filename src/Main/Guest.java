@@ -16,6 +16,10 @@ public class Guest {
         this.id=id++;  //TODO: get the last id from SQL och adda den här istället för id++;
     }
 
+    public Guest() {
+    }
+
+    
     public String getFirstName() {
         return firstName;
     }
