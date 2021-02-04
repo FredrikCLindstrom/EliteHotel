@@ -20,7 +20,7 @@ public class ReceptionUser {
 
     public enum ReceptionMenuItem {
         // parameters menuChar, menuChoiceText, enabledMenuChoice, hiddenMenuChoice
-        RECEPTION_MENU_____STORE_GUEST('T', "STore guest data", true, false),
+        RECEPTION_MENU_____SHOW__STATS('T', "Show guest statistics", true, false),
         RECEPTION_MENU____SEARCH_GUEST('S', "Search guest data", true, false),
         RECEPTION_MENU____CHANGE_GUEST('Z', "Change guest data", true, false),
         RECEPTION_MENU____DELETE_GUEST('D', "Delete guest data", true, false),
@@ -94,20 +94,22 @@ public class ReceptionUser {
             userMenuChoice = getReceptionMenuChoice("What do you want to do? ");
 
             switch (userMenuChoice) {
-                case RECEPTION_MENU_____STORE_GUEST:
-                    System.out.println(TODO_COLOR + "TODO: Handle storing guest data"+ RESET_COLOR);
+                case RECEPTION_MENU_____SHOW__STATS:
+                    SQLManagement.showStats();
                     break;
 
                 case RECEPTION_MENU____CHANGE_GUEST:
-                    System.out.println(TODO_COLOR + "TODO: Handle changing guest data"+ RESET_COLOR);
+                    SQLManagement.updateGuestData();
                     break;
 
                 case RECEPTION_MENU____SEARCH_GUEST:
-                    System.out.println(TODO_COLOR + "TODO: Handle searching for guest data"+ RESET_COLOR);
+                    
                     SQLManagement.searchSpecifikGuestData();
                     break;
 
                 case RECEPTION_MENU____DELETE_GUEST:
+                    SQLManagement.deleteGuestData();
+                    break;
                 case RECEPTION_MENU_______BOOK_ROOM:
                     String theGuestString= "the Guest";
                     String theGuestString2= "the Guests";
@@ -119,6 +121,7 @@ public class ReceptionUser {
                 case RECEPTION_MENU______ORDER_FOOD:
                     String theGuestString1="the guest";
                     GuestUser.orderFoodForTheRoom(theGuestString1);
+                    break;
                 case GUEST_MENU________CHECKOUT:
                     if (checkThatThereAreGuestsThatCanCheckOut()==true) {
                         try {
@@ -252,24 +255,5 @@ public class ReceptionUser {
         }
         
     }
-     public static void updateAndDeleteData(){
-       Scanner scan = new Scanner(System.in);
-       System.out.println("Would you like to delete or update data?");
-       System.out.println("1.Delete");
-       System.out.println("2.update");
-       int a = scan.nextInt();
-       switch(a){
-           case 1:
-               SQLManagement.deleteGuestData();
-               break;
-           case 2:
-               SQLManagement.updateGuestData();
-               break;
-           default:
-               System.out.println("Not a valid choice");
-               break;
-               
-               
-       }
-   }
+     
 }

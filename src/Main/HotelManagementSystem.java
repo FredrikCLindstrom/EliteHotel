@@ -232,7 +232,7 @@ public class HotelManagementSystem {
         for (Room room : testingRoomList) {
             i++;
             if(i%2==0){
-                room.guest=new Guest(firstNames[i],lastNames[i],2);
+                room.guest=new Guest(firstNames[i],lastNames[i],2,"070");
             }
         }
         testingRoomList.stream().forEach(e->System.out.println(e.toString()));
