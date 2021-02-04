@@ -266,9 +266,9 @@ public class GuestUser {
     }
     
     public static void addSomePeopleToRooms(){ //TODO: REMOVE, just testing with this
-        Guest testGuest1= new Guest("hasse","olofsson",2);
-        Guest testGuest2= new Guest("maja","kennethsson",5);
-        Guest testGuest3= new Guest("samuel","lavasani",2);
+        Guest testGuest1= new Guest("hasse","olofsson",2,"0706609034");
+        Guest testGuest2= new Guest("maja","kennethsson",5,"0706609035");
+        Guest testGuest3= new Guest("samuel","lavasani",2,"0706609036");
         for (Room room : HotelManagementSystem.allRoomsList) {
             if(room.roomNr==2){
                 room.setGuest(testGuest1);
@@ -297,6 +297,8 @@ public class GuestUser {
         String firstName=Input.getUserInputString();
         System.out.println("Enter "+eitherGuestsOrYour+" last Name");
         String lastName=Input.getUserInputString();
+        System.out.println("Please enter a phone number");
+        String phoneNr=Input.getUserInputString();
         System.out.println("How many Nights do "+eitherGuestOrYou+" want to stay?");
         int numberOfNights=Input.getUserInputInt();
         
@@ -305,12 +307,12 @@ public class GuestUser {
         
         System.out.println("Guest :"+firstName+" "+lastName+", check in: "+today+" check out : "+checkOut);
         
-        Guest guestCreate=new Guest(firstName,lastName,numberOfNights);
+        Guest guestCreate=new Guest(firstName,lastName,numberOfNights,phoneNr);
         HotelManagementSystem.allRoomsList.stream().filter(e->e.getRoomNr()==(roomChoice)).forEach(e->e.setGuest(guestCreate));
         
         int guestId = guestCreate.getGuestId();
         
-        SQLManagement.guesstDataToDb(guestId,firstName, lastName, numberOfNights);
+        SQLManagement.guesstDataToDb(guestId,firstName, lastName, numberOfNights,phoneNr);
         
     }
     

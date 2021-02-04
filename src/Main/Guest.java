@@ -9,15 +9,25 @@ public class Guest {
     private String firstName;
     private String lastName;
     private int numberOfNights;
+    private String phone;
 
-    public Guest(String firstName, String lastName, int numberOfNights) {
+    public Guest(String firstName, String lastName, int numberOfNights, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.numberOfNights=numberOfNights;
         this.guestId=firstFreeGuestNr++;  //TODO: get the last id from SQL och adda den här istället för id++;
+        this.phone=phone;
     }
 
     public Guest() {
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     

@@ -1,0 +1,12 @@
+
+
+	Receipt for Guest 
+
+	NAME: fred freddiesson 
+	Room: 16 Luxury Double Room
+	For: 3 Nights, [4000 * 3] 
+	Price: 12000
+	Extras: None
+	Total Cost: 12000
+
+	Welcome Back
