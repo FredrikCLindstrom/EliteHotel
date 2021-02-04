@@ -1,5 +1,7 @@
 package Main;
 
+import static Main.GuestUser.checkThatThereAreGuestsThatCanCheckOut;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,11 +22,12 @@ public class ReceptionUser {
         // parameters menuChar, menuChoiceText, enabledMenuChoice, hiddenMenuChoice
         RECEPTION_MENU_____STORE_GUEST('T', "STore guest data", true, false),
         RECEPTION_MENU____SEARCH_GUEST('S', "Search guest data", true, false),
-        RECEPTION_MENU____CHANGE_GUEST('C', "Change guest data", true, false),
+        RECEPTION_MENU____CHANGE_GUEST('Z', "Change guest data", true, false),
         RECEPTION_MENU____DELETE_GUEST('D', "Delete guest data", true, false),
         RECEPTION_MENU_______BOOK_ROOM('B', "Book a room", true, false),
         RECEPTION_MENU____UPGRADE_ROOM('U', "Upgrade a room", true, false),
         RECEPTION_MENU______ORDER_FOOD('F', "Order Food", true, false),
+        GUEST_MENU________CHECKOUT('C', "Checkout", true, false),
         RECEPTION_MENU_____HIDDEN_TEST('!', "HIDDEN CHOICE, NOT SHOWN", true, true),
         RECEPTION_MENU__EXIT_RECEPTION('X', "EXit reception menu", true, false);
 
@@ -101,6 +104,7 @@ public class ReceptionUser {
 
                 case RECEPTION_MENU____SEARCH_GUEST:
                     System.out.println(TODO_COLOR + "TODO: Handle searching for guest data"+ RESET_COLOR);
+                    SQLManagement.searchSpecifikGuestData();
                     break;
 
                 case RECEPTION_MENU____DELETE_GUEST:
@@ -115,9 +119,19 @@ public class ReceptionUser {
                 case RECEPTION_MENU______ORDER_FOOD:
                     String theGuestString1="the guest";
                     GuestUser.orderFoodForTheRoom(theGuestString1);
-                    
-                    
+                case GUEST_MENU________CHECKOUT:
+                    if (checkThatThereAreGuestsThatCanCheckOut()==true) {
+                        try {
+                            GuestUser.checkOutprint();
+                            
+                    }catch (IOException e){
+                            System.err.println("I/O exception error occured");
+                    }
+                    }else{
+                        System.err.println("No Guests to CheckOut");
+                    }
                     break;
+                
 
                 case RECEPTION_MENU_____HIDDEN_TEST:
                     System.out.println(TODO_COLOR + "You found the HIDDEN MENU CHOICE - TODO: Handle this");
@@ -136,6 +150,7 @@ public class ReceptionUser {
 
         } while (userMenuChoice != ReceptionMenuItem.RECEPTION_MENU__EXIT_RECEPTION);
     }
+       
 
     // Show the menu choices, and get a valid choice from the user
     private static ReceptionMenuItem getReceptionMenuChoice(String prompt) {
@@ -237,4 +252,24 @@ public class ReceptionUser {
         }
         
     }
+     public static void updateAndDeleteData(){
+       Scanner scan = new Scanner(System.in);
+       System.out.println("Would you like to delete or update data?");
+       System.out.println("1.Delete");
+       System.out.println("2.update");
+       int a = scan.nextInt();
+       switch(a){
+           case 1:
+               SQLManagement.deleteGuestData();
+               break;
+           case 2:
+               SQLManagement.updateGuestData();
+               break;
+           default:
+               System.out.println("Not a valid choice");
+               break;
+               
+               
+       }
+   }
 }

@@ -1,0 +1,12 @@
+
+
+	Receipt for Guest 
+
+	NAME: rretrr ytuuu 
+	Room: 16 Luxury Double Room
+	For: 4 Nights [4000 * 4] 
+	Price: 16000
+	Extras: None
+	Total Cost: 16000
+
+	Welcome Back

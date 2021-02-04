@@ -308,9 +308,13 @@ public class GuestUser {
         Guest guestCreate=new Guest(firstName,lastName,numberOfNights);
         HotelManagementSystem.allRoomsList.stream().filter(e->e.getRoomNr()==(roomChoice)).forEach(e->e.setGuest(guestCreate));
         
+        int guestId = guestCreate.getGuestId();
+        
+        SQLManagement.guesstDataToDb(guestId,firstName, lastName, numberOfNights);
+        
     }
     
-    private static void checkOutprint() throws IOException {
+    public static void checkOutprint() throws IOException {
         boolean roomHasGuest = false;
         int choice=0;
         System.out.println(Misc.GREEN + "---CHECKOUT SECTION---" + Misc.RESET);
