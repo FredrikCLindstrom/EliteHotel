@@ -265,22 +265,23 @@ public class GuestUser {
         return listToReturnAllNonOccupied;
     }
     
-    public static void addSomePeopleToRooms(){ //TODO: REMOVE, just testing with this
-        Guest testGuest1= new Guest("hasse","olofsson",2,"0706609034");
-        Guest testGuest2= new Guest("maja","kennethsson",5,"0706609035");
-        Guest testGuest3= new Guest("samuel","lavasani",2,"0706609036");
+   public static void addSomePeopleToRooms(){ //TODO: REMOVE, just testing with this  
+        Guest testGuest1= new Guest("Hasse","Olofsson",2,"0706609034");
+        Guest testGuest2= new Guest("Maja","Kennethsson",5,"0706609035");
+        Guest testGuest3= new Guest("Samuel","Larsson",2,"0706609036");
         for (Room room : HotelManagementSystem.allRoomsList) {
             if(room.roomNr==2){
                 room.setGuest(testGuest1);
             }
-            if(room.roomNr==6){
+            if(room.roomNr==5){
                 room.setGuest(testGuest2);
             }
-            if(room.roomNr==14){
+            if(room.roomNr==12){ 
                 room.setGuest(testGuest3);
             }
         }
     }
+    
     private static int chooseRoomNumberToBook(String eitherGuestOrYou){
         List<Room>availableToChangeToList=HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).collect((Collectors.toList()));
         Ranking.highestRanked(availableToChangeToList);
@@ -349,12 +350,12 @@ public class GuestUser {
     }
     
     public static void addSomeFodTestMethod(){
-        Food food1=new Sandwich(14);
-        Food food2 = new Soda(14);
+        Food food1=new Sandwich(12);
+        Food food2 = new Soda(12);
         HotelManagementSystem.foodList.add(food1);
         HotelManagementSystem.foodList.add(food2);
-        
     }
+    
     public static boolean checkThatThereAreGuestsThatCanCheckOut(){
         long numberOfGuests=0;
         boolean moreThanZeroGuests=false;
