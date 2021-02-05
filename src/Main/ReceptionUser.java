@@ -83,7 +83,7 @@ public class ReceptionUser {
 
     static void receptionUserMenu() {
 
-        System.out.println(INFO_COLOR + "Straight to the rececption menu (no login or security check for now)" + RESET_COLOR);
+        
 
         ReceptionMenuItem userMenuChoice;
 

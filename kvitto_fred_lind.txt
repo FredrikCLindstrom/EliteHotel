@@ -1,0 +1,12 @@
+
+
+	Receipt for Guest 
+
+	NAME: fred lind 
+	Room: 4 Standard Single Room
+	For: 4 Nights [2500 * 4] 
+	Price: 10000
+	Extras: None
+	Total Cost: 10000
+
+	Welcome Back

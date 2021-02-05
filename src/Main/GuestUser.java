@@ -188,7 +188,7 @@ public class GuestUser {
     }
 
     private static void ShowAllRooms(){
-        System.out.println("ALL ROOMS"); 
+        System.out.println(Misc.GREEN+"ALL ROOMS"+ Misc.RESET); 
         HotelManagementSystem.allRoomsList.stream().forEach(e->System.out.println(e.toString()));
     }
     
@@ -217,12 +217,15 @@ public class GuestUser {
         
         do { 
             
-            listNonOccupiedRooms=availableSSRoomsWithRoomNumber();
+            listNonOccupiedRooms=availableRoomsWithRoomNumber();
             
             
             
         roomNumberChoice=chooseRoomNumberToBook(eitherGuestOrYou);
-            
+        
+            if (roomNumberChoice==0) {
+                return;
+            }
             if (!listNonOccupiedRooms.contains(roomNumberChoice)) {
                 System.err.println("Room is not available");
             }
@@ -232,7 +235,7 @@ public class GuestUser {
         
     }
     
-    private static List<Integer> availableSSRoomsWithRoomNumber() {
+    private static List<Integer> availableRoomsWithRoomNumber() {
 
         List<Class> roomTypeArrayList = new ArrayList<>();
         roomTypeArrayList.add(StandardSingleRoom.class);
@@ -240,7 +243,10 @@ public class GuestUser {
         roomTypeArrayList.add(LuxurySingleRoom.class);
         roomTypeArrayList.add(LuxuryDoubleRoom.class);
         List<Integer> newListOfAvailRoomsOfCertainClass = new ArrayList<Integer>();
+        List<Room> newListOfAvailRoomsOfCertainClassObjects = new ArrayList<Room>();
         List<Integer> listToReturnAllNonOccupied = new ArrayList<Integer>();
+        Building.drawPlan(HotelManagementSystem.allRoomsList, true, false);
+        System.out.println(Misc.BR_YELLOW+"--Recommended rooms are printed in yellow--"+ Misc.RESET);
         for (Class thisClass : roomTypeArrayList) {
 
             long availableNumberOfRooms = HotelManagementSystem.allRoomsList.stream().
@@ -251,16 +257,24 @@ public class GuestUser {
                     filter(e -> e.guest == null).
                     filter(e -> e.getClass().equals(thisClass)).map(e -> e.getRoomNr()).collect(toList());
 
+            newListOfAvailRoomsOfCertainClassObjects = HotelManagementSystem.allRoomsList.stream().
+                    filter(e -> e.guest == null).
+                    filter(e -> e.getClass().equals(thisClass)).collect(toList());
+
+            Room bestRoom = Ranking.highestRanked(newListOfAvailRoomsOfCertainClassObjects);
             String bedRoomName = thisClass.getTypeName();
             String useThisNameForPrintOut = bedRoomName.substring(5);
-            
-            System.out.println(Misc.GREEN+useThisNameForPrintOut + " available : " + availableNumberOfRooms+Misc.GREEN);
+
+            System.out.println(Misc.GREEN + useThisNameForPrintOut + " available : " + availableNumberOfRooms + Misc.RESET);
 
             for (Integer roomNr : newListOfAvailRoomsOfCertainClass) {
-                System.out.println("Room Number :" + roomNr);
-                
+                if (roomNr == bestRoom.getRoomNr()) {
+                    System.out.println(Misc.BR_YELLOW+"Room Number :" + roomNr+Misc.RESET);
+                }else{
+                    System.out.println("Room Number :"+roomNr );
+                }
             }
-          listToReturnAllNonOccupied.addAll(newListOfAvailRoomsOfCertainClass);
+            listToReturnAllNonOccupied.addAll(newListOfAvailRoomsOfCertainClass);
         }
         return listToReturnAllNonOccupied;
     }
@@ -283,9 +297,11 @@ public class GuestUser {
     }
     
     private static int chooseRoomNumberToBook(String eitherGuestOrYou){
-        List<Room>availableToChangeToList=HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).collect((Collectors.toList()));
-        Ranking.highestRanked(availableToChangeToList);
-        System.out.println(Misc.GREEN+"What room number would "+eitherGuestOrYou+" like to book?"+Misc.RESET);
+        //List<Room>availableToChangeToList=HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).collect((Collectors.toList()));
+        //Misc.printDebug(RESET_COLOR+availableToChangeToList.toString());
+        //Room bestroom=Ranking.highestRanked(availableToChangeToList);
+        //System.out.println(Misc.CYAN+"Suggested available room is: "+bestroom+Misc.RESET);
+        System.out.print(Misc.GREEN+"What room number would "+eitherGuestOrYou+" like to book(0 to cancel)?: "+Misc.RESET);
         int choice=Input.getUserInputInt();
         
         return choice;
@@ -294,19 +310,19 @@ public class GuestUser {
     private static void createGuestAndAddToRoom(int roomChoice, String eitherGuestOrYou,String eitherGuestsOrYour){
         
         
-        System.out.println("Enter "+eitherGuestsOrYour+" first Name");
+        System.out.print(Misc.GREEN+"Enter "+eitherGuestsOrYour+" first Name: "+Misc.RESET);
         String firstName=Input.getUserInputString();
-        System.out.println("Enter "+eitherGuestsOrYour+" last Name");
+        System.out.print(Misc.GREEN+"Enter "+eitherGuestsOrYour+" last Name: "+Misc.RESET);
         String lastName=Input.getUserInputString();
-        System.out.println("Please enter a phone number");
+        System.out.print(Misc.GREEN+"Please enter a phone number: "+Misc.RESET);
         String phoneNr=Input.getUserInputString();
-        System.out.println("How many Nights do "+eitherGuestOrYou+" want to stay?");
+        System.out.print(Misc.GREEN+"How many Nights do "+eitherGuestOrYou+" want to stay?: "+Misc.RESET);
         int numberOfNights=Input.getUserInputInt();
         
         LocalDate today= LocalDate.now();
         LocalDate checkOut= today.plusDays(numberOfNights);
         
-        System.out.println("Guest :"+firstName+" "+lastName+", check in: "+today+" check out : "+checkOut);
+        System.out.println(Misc.GREEN+"Guest :"+firstName+" "+lastName+", check in: "+today+" check out : "+checkOut+Misc.RESET);
         
         Guest guestCreate=new Guest(firstName,lastName,numberOfNights,phoneNr);
         HotelManagementSystem.allRoomsList.stream().filter(e->e.getRoomNr()==(roomChoice)).forEach(e->e.setGuest(guestCreate));
@@ -326,8 +342,9 @@ public class GuestUser {
 
         while (roomHasGuest==false) {
 
-            System.out.println("What room number do you wish to check out?");
+            System.out.println(Misc.GREEN +"--What room number do you wish to check out (0 to cancel) ?--"+ Misc.RESET);
             List<Integer> occupiedRoomsCheckoutCheck = new ArrayList<>();
+            
             for (Room room : HotelManagementSystem.allRoomsList) {
                 if (room.guest != null) {
                     occupiedRoomsCheckoutCheck.add(room.getRoomNr());
@@ -335,7 +352,11 @@ public class GuestUser {
             }
 
             choice = Input.getUserInputInt();
-
+            
+            if (choice==0) {
+                return;
+            }
+            
             if (occupiedRoomsCheckoutCheck.contains(choice)) {
                 roomHasGuest = true;
             } else {
@@ -380,33 +401,36 @@ public class GuestUser {
                 case 1:
                     Food soda = new Soda(roomNumber);
                     HotelManagementSystem.foodList.add(soda);
+                    System.out.println(Misc.GREEN+"--Soda ordered--"+Misc.RESET);
                     break;
                 case 2:
                     Food sandwich = new Sandwich(roomNumber);
                     HotelManagementSystem.foodList.add(sandwich);
+                    System.out.println(Misc.GREEN+"--Sandwich ordered--"+Misc.RESET);
                     break;
                 case 3:
                     Food noodles = new Noodles(roomNumber);
                     HotelManagementSystem.foodList.add(noodles);
+                    System.out.println(Misc.GREEN+"--Noodles ordered--"+Misc.RESET);
                     break;//add case 4 if added food to menu
                 default:
                     break;
             }
 
         }else{
-            System.out.println("Ok, nothing ordered");
+            System.out.println(Misc.GREEN+"Ok, nothing ordered"+Misc.RESET);
         }
     }
     
     public static int orderWhat(String YouOrTheGuest){
         int num=1;
-        System.out.println("--What would "+YouOrTheGuest+" like to order?--");
+        System.out.println(Misc.GREEN+"--What would "+YouOrTheGuest+" like to order?--"+Misc.RESET);
         for (Food food : HotelManagementSystem.foodMenu) {
-            System.out.println(num+": "+food.forReceiptPrintOut());
+            System.out.println(CHOICE_COLOR+num+MENU_COLOR+": "+food.forReceiptPrintOut()+Misc.RESET);
             num++;
         }
         
-        System.out.println(num+": Go Back");
+        System.out.println(CHOICE_COLOR+num+MENU_COLOR+": Go Back"+Misc.RESET);
         int choice=Input.getUserInputInt();
         
         return choice;
@@ -419,14 +443,14 @@ public class GuestUser {
         
         while (roomHasGuest == false) {
 
-            System.out.println("--please enter room number--");
+            System.out.println(Misc.GREEN+"--please enter room number--"+Misc.RESET);
             roomNumber = Input.getUserInputInt();
 
             for (Room room : HotelManagementSystem.allRoomsList) {
                 if (room.getRoomNr() == roomNumber) {
                     roomExistInlist=true;
                     if (room.guest != null) {
-                        System.out.println("Room Number: " + room.getRoomNr() + " " + room.guest.getFirstName() + " " + room.guest.getLastName());
+                        System.out.println(Misc.GREEN+"Room Number: " + room.getRoomNr() + " " + room.guest.getFirstName() + " " + room.guest.getLastName()+Misc.RESET);
                         roomHasGuest=true;
                     } else {
                         System.err.println("Room Number: " + room.getRoomNr() + " is Empty");

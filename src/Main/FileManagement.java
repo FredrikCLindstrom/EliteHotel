@@ -61,7 +61,7 @@ public class FileManagement {
             FileManagement data = new FileManagement("kvitto_" + fullName + ".txt");
             data.writeToFile(testString3);
         } catch (IOException e) {
-            System.err.println("Something went wrong trying to print receipt");
+            System.err.println("Something went wrong trying to print receipt"+e);
         }
 
         System.out.println("Receipt sent to printer");
