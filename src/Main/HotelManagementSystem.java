@@ -167,60 +167,31 @@ public class HotelManagementSystem {
     }
 
     
-    public static void addRoomsToLists(){
+    public static void addRoomsToLists() {
+
+        // Add the six room on the west wing, so the order corresponds to the hotel plan
+        allRoomsList.add(new StandardDoubleRoom());
+        allRoomsList.add(new StandardSingleRoom());
+        allRoomsList.add(new StandardDoubleRoom());
+        allRoomsList.add(new StandardSingleRoom());
+        allRoomsList.add(new StandardDoubleRoom());
+        allRoomsList.add(new StandardSingleRoom());
+        // Add the six room on the east wing, so the order corresponds to the hotel plan
+        allRoomsList.add(new LuxurySingleRoom());
+        allRoomsList.add(new LuxuryDoubleRoom());
+        allRoomsList.add(new LuxurySingleRoom());
+        allRoomsList.add(new LuxuryDoubleRoom());
+        allRoomsList.add(new LuxurySingleRoom());
+        allRoomsList.add(new LuxuryDoubleRoom());
         
-        Room roomSS1 = new StandardSingleRoom();
-        Room roomSS2 = new StandardSingleRoom();
-        Room roomSS3 = new StandardSingleRoom();
-        Room roomSS4 = new StandardSingleRoom();
-        Room roomSS5 = new StandardSingleRoom();
+        // Adding 2 extra to avoid problems with room 14 TODO:remove
+        allRoomsList.add(new LuxurySingleRoom());
+        allRoomsList.add(new LuxuryDoubleRoom());
         
-        Room roomSD1 = new StandardDoubleRoom();
-        Room roomSD2 = new StandardDoubleRoom();
-        Room roomSD3 = new StandardDoubleRoom();
-        Room roomSD4 = new StandardDoubleRoom();
-        Room roomSD5 = new StandardDoubleRoom();
-        
-        Room roomLS1 = new LuxurySingleRoom();
-        Room roomLS2 = new LuxurySingleRoom();
-        Room roomLS3 = new LuxurySingleRoom();
-        Room roomLS4 = new LuxurySingleRoom();
-        Room roomLS5 = new LuxurySingleRoom();
-        
-        Room roomLD1 = new LuxuryDoubleRoom();
-        Room roomLD2 = new LuxuryDoubleRoom();
-        Room roomLD3 = new LuxuryDoubleRoom();
-        Room roomLD4 = new LuxuryDoubleRoom();
-        Room roomLD5 = new LuxuryDoubleRoom();
-        
-        allRoomsList.add(roomSS1);
-        allRoomsList.add(roomSS2);
-        allRoomsList.add(roomSS3);
-        allRoomsList.add(roomSS4);
-        allRoomsList.add(roomSS5);
-        
-        allRoomsList.add(roomSD1);
-        allRoomsList.add(roomSD2);
-        allRoomsList.add(roomSD3);
-        allRoomsList.add(roomSD4);
-        allRoomsList.add(roomSD5);
-        
-        allRoomsList.add(roomLS1);
-        allRoomsList.add(roomLS2);
-        allRoomsList.add(roomLS3);
-        allRoomsList.add(roomLS4);
-        allRoomsList.add(roomLS5);
-        
-        allRoomsList.add(roomLD1);
-        allRoomsList.add(roomLD2);
-        allRoomsList.add(roomLD3);
-        allRoomsList.add(roomLD4);
-        allRoomsList.add(roomLD5);
-        
-        diffrentTypeOfRoomsList.add(roomSS1);
-        diffrentTypeOfRoomsList.add(roomSD1);
-        diffrentTypeOfRoomsList.add(roomLS1);
-        diffrentTypeOfRoomsList.add(roomLD1);
+        diffrentTypeOfRoomsList.add(new StandardSingleRoom());
+        diffrentTypeOfRoomsList.add(new StandardDoubleRoom());
+        diffrentTypeOfRoomsList.add(new LuxurySingleRoom());
+        diffrentTypeOfRoomsList.add(new LuxuryDoubleRoom());
     }
     
     public static void testingMethod() throws IOException{
