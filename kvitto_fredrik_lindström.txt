@@ -1,0 +1,12 @@
+
+
+	Receipt for Guest 
+
+	NAME: fredrik lindström 
+	Room: 7 Luxury Single Room
+	For: 2 Nights [3000 * 2] 
+	Price: 6000
+	Extras: Soda 30 Sandwich 100 
+	Total Cost: 6130
+
+	Welcome Back

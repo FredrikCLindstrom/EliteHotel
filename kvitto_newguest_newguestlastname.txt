@@ -1,0 +1,12 @@
+
+
+	Receipt for Guest 
+
+	NAME: newguest newguestlastname 
+	Room: 8 Luxury Double Room
+	For: 2 Nights [4000 * 2] 
+	Price: 8000
+	Extras: None
+	Total Cost: 8000
+
+	Welcome Back
