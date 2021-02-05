@@ -78,8 +78,8 @@ public class Building {
     // ASCII represantation of the drawing & room layoyut of the hotel building
     static final String[] HOTEL_ASCII = {
         //1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-        "┊Standard double┊┊Standard single┊       ___________________           ┊Luxury single┊                 Luxury Double┊              ", // row 0
-        "☀___▼_______________▼________☀           | HOTEL FLOORPLAN |           ☀___▼_____...._____________________▼______...._____________☀",
+        "┊Standard double┊┊Standard single┊       ===================           ┊Luxury single┊                 Luxury Double┊              ", // row 0
+        "☀___▼_______________▼________            ║ HOTEL FLOORPLAN ║            ___▼_____...._____________________▼______...._____________☀",
         "║`--´| WC Sh.│   ʤ│WC Sh.|`-´║           ===================           ║_____|            |_____│ʤ    │___|___|        |______|   ║",
         "║Room 1¨¨¨¨¨¨│1   │¨¨¨¨¨     ║                                         ║          Room 11       │   12│        Room 12   O  O     ║",
         "┇________   ╲      ╲  Room 2 ┇                                         ┇  _______              ╱       ╱               ________   ┇",
@@ -101,7 +101,7 @@ public class Building {
         "║ bed    |  ¦│    │   | Twin ║                                         ║ | size  | (___)|WC,bath│     │WC, bath|(___) |  size  |  ║", // row 20
         "║--------´   │    │¦  | bed  ║                                         ║ | bed   |  ___ |Shower │     │ Shower | ___  |  bed   |  ║",
         "║____________│    │___|______║=======....===================.....======║_|_______|_:___:|_______│     │________|:___:_|________|__║",
-        "║            │      ☜  W e s t   c o r r i d o r  ☜             ☞  E e s t   c o r r i d o r  ☞        ╱ Broom closet, storage    ║",
+        "║            │      ☜  W e s t   c o r r i d o r  ☜             ☞  E a s t   c o r r i d o r  ☞        ╱ Broom closet, storage    ║",
         "║  ,---------│◣▁__________________________________         _________________________________________▁◢│___________________________║",
         "┇  |         │  |    _____       _____     |  │ʤD            ʤ│   Reception    ╱ Staff room  │ WC  |  WC  │  o __ o     o __ o   ʤ║",
         "║  |         │__|   (_____)     (_____)    |__│D               ╲____________ˎˏ|_______________|_ ╲__|_ ╲__│ o (__) o   o (__) o   ┇",
@@ -137,7 +137,7 @@ public class Building {
         "ebBED    ¦f ¦e    e   b TWIN eg                                        efb       | (___)a       ei    eaC, BATH|f___) b  SIZE  |  e   ",
         "eb-------´   e    ef  b BED  eg                                        efb       |  ___ a       ei    eaSHOWER |f___  b  BED   |  e   ",
         "e____________ei   e___be_____e=========================================e_be______befe__fae______ei    e________afe__febe_______fe_e   ",
-        "e            |i --                                                                                    e j                         e   ",
+        "e            |j                                                                                       e j                         e   ",
         "ef ,---------e____________________________________         ___________________________________________e___________________________|   ",
         "ef |         ef |    _____       _____        egf           g fei             ee j           eiWC  eiWC e  f                    ege   ",
         "ef |         ef_|   (_____)     (_____)       ef              f_______________e______________|_ £__|_ £___|f                      e   ",

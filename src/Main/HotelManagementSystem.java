@@ -20,7 +20,7 @@ public class HotelManagementSystem {
     public static final String ERROR_COLOR = Misc.RED;
     public static final String INFO_COLOR = Misc.GREEN;
     public static final String RESET_COLOR = Misc.RESET; // Normally white color
-
+    public static final String USER_CHOICE_COLOR = Misc.GREEN;
     private final static Scanner SCANNER = new Scanner(System.in);
 
     public enum MainMenuItem {
@@ -99,7 +99,7 @@ public class HotelManagementSystem {
 
         do {
             // Show the menu choices, and get a valid choice from the user
-            userMenuChoice = getMainMenuChoice("What do you want to do? ");
+            userMenuChoice = getMainMenuChoice(Misc.GREEN + "Your choice: " + Misc.RESET);
 
             switch (userMenuChoice) {
 
@@ -190,6 +190,8 @@ public class HotelManagementSystem {
         diffrentTypeOfRoomsList.add(new StandardDoubleRoom());
         diffrentTypeOfRoomsList.add(new LuxurySingleRoom());
         diffrentTypeOfRoomsList.add(new LuxuryDoubleRoom());
+        
+        allRoomsList.stream().forEach(a-> System.out.println(a.toString()));
     }
 
     public static void testingMethod() throws IOException {
@@ -352,18 +354,33 @@ Enter your choice :
 6. Check out for customer and showing bill
 
 --- GRADE CRITERIA ------------------------------------------
+(old) For ”G” You have to cover minimum
+(old) objektive for course.
+(old)  Classes
+(old)  Collections or Arrays
+(old)  Exceptions
+(old)  Java 8 features (Lambda, Stream, Method Reference)
+(old)  Nr ”VG” You have to cover some extra topics like generic methods or generic classes.
+(old)  Some Extra feature to make your user interface secure and maintainable like
+(old)     save customer data in both file and database.ext Level I/O hantering with Files or database.
+(old)  For ”VG” You have to cover some extra topics like generic methods or generic classes.
+(old)  Some Extra feature to make your user interface secure and maintainable like
+(old)     save customer data in both file and database.
+
+New:
+=====
 For ”G” You have to cover minimum
 objektive for course.
  Classes
  Collections or Arrays
  Exceptions
  Java 8 features (Lambda, Stream, Method Reference)
- Nr ”VG” You have to cover some extra topics like generic methods or generic classes.
- Some Extra feature to make your user interface secure and maintainable like
-    save customer data in both file and database.ext Level I/O hantering with Files or database.
+ Next Level I/O hantering with Files or database.
+
  For ”VG” You have to cover some extra topics like generic methods or generic classes.
  Some Extra feature to make your user interface secure and maintainable like
     save customer data in both file and database.
+
 
 --- DEADLINE -----------------------------------------------
  First Presentation 08 Feb 2021

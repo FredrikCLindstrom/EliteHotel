@@ -7,7 +7,7 @@ public class StandardDoubleRoom extends Room {
         this.name = "Standard Double Room";
 
         this.beds = 1; // One double bed";
-        this.bedName = "Kingsize bed";
+        this.bedName = "Double bed";
         this.acEquipped = true;
         this.breakfastIncluded = true;
         this.chargePerDay = 3500;  // SEK 
