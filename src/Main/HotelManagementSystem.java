@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class HotelManagementSystem {
-    
+
     static List<Room> allRoomsList = new ArrayList<>();
     static List<Room> diffrentTypeOfRoomsList = new ArrayList<>();
     static List<Room> emptyRoomsList = new ArrayList<>();
     static List<Room> testingRoomList = new ArrayList<>();
     static List<Food> foodList = new ArrayList<>();
     static List<Food> foodMenu = new ArrayList<>();
-    
+
     public static final String MENU_COLOR = Misc.CYAN;
     public static final String CHOICE_COLOR = Misc.YELLOW;
     public static final String ERROR_COLOR = Misc.RED;
@@ -82,19 +82,20 @@ public class HotelManagementSystem {
 
     public static void main(String[] args) {
         addMenuItemsToMenu();
-        GuestUser.addSomeFodTestMethod();//lägger till 2 foods på rum 14
+        GuestUser.addSomeFodTestMethod();//lägger till 2 foods på rum 12 
         addRoomsToLists();
-        GuestUser.addSomePeopleToRooms();//lägger till 3 gäster i hotellet vid start
+        GuestUser.addSomePeopleToRooms();//lägger till 3 gäster i hotellet vid start 
+
+        // Show the hotel plan with free rooms in green, and occupied ones in red
+        Building.drawPlan(allRoomsList, true, false); // (markAvailability = true, reception = false
+
         //Hotel thisHotel = new Hotel();
         UseAsGuestOrReceptionist();
-
     }
 
     static void UseAsGuestOrReceptionist() {
 
         MainMenuItem userMenuChoice;
-
-        System.out.println("");
 
         do {
             // Show the menu choices, and get a valid choice from the user
@@ -113,7 +114,9 @@ public class HotelManagementSystem {
                     break;
 
                 case MAIN_MENU_____HIDDEN_TEST:
-                    System.out.println("You found the HIDDEN MENU CHOICE - TODO: Handle this");
+                    System.out.println("You found the HIDDEN MENU CHOICE");
+                    Misc.debug = !Misc.debug;
+                    System.out.println("DEBUG = " + Misc.debug + " for  Misc.printDebug()");
                     break;
 
                 case MAIN_MENU____EXIT_PROGRAM:
@@ -166,7 +169,6 @@ public class HotelManagementSystem {
         return userMenuChoice;
     }
 
-    
     public static void addRoomsToLists() {
 
         // Add the six room on the west wing, so the order corresponds to the hotel plan
@@ -183,44 +185,41 @@ public class HotelManagementSystem {
         allRoomsList.add(new LuxuryDoubleRoom());
         allRoomsList.add(new LuxurySingleRoom());
         allRoomsList.add(new LuxuryDoubleRoom());
-        
-        // Adding 2 extra to avoid problems with room 14 TODO:remove
-        allRoomsList.add(new LuxurySingleRoom());
-        allRoomsList.add(new LuxuryDoubleRoom());
-        
+
         diffrentTypeOfRoomsList.add(new StandardSingleRoom());
         diffrentTypeOfRoomsList.add(new StandardDoubleRoom());
         diffrentTypeOfRoomsList.add(new LuxurySingleRoom());
         diffrentTypeOfRoomsList.add(new LuxuryDoubleRoom());
     }
-    
-    public static void testingMethod() throws IOException{
+
+    public static void testingMethod() throws IOException {
         System.out.println("TestMethod 4 rooms, 2 of them");
-        String[] firstNames = {"mister", "dennis", "klara", "kenny","vince"};
+        String[] firstNames = {"mister", "dennis", "klara", "kenny", "vince"};
         String[] lastNames = {"mistersson", "karlson", "götesson", "bennysson", "hoofs"};
         testingRoomList.addAll(diffrentTypeOfRoomsList);
-        int i=0;
+        int i = 0;
         for (Room room : testingRoomList) {
             i++;
-            if(i%2==0){
-                room.guest=new Guest(firstNames[i],lastNames[i],2,"070");
+            if (i % 2 == 0) {
+                room.guest = new Guest(firstNames[i], lastNames[i], 2, "070");
             }
         }
-        testingRoomList.stream().forEach(e->System.out.println(e.toString()));
+        testingRoomList.stream().forEach(e -> System.out.println(e.toString()));
         System.out.println("test for occupied rooms");
-        testingRoomList.stream().filter(e->e.guest!=null).forEach(e->System.err.println("Room Number:"+e.roomNr+" "+e.name+" is occupied"));
+        testingRoomList.stream().filter(e -> e.guest != null).forEach(e -> System.err.println("Room Number:" + e.roomNr + " " + e.name + " is occupied"));
         //FileManagement.printToTextDoc(testingRoomList.get(3).getGuest());
-        
+
     }
-    private static void addMenuItemsToMenu(){
-        Food soda=new Soda();
+
+    private static void addMenuItemsToMenu() {
+        Food soda = new Soda();
         Food sandwich = new Sandwich();
         Food noodles = new Noodles();
         foodMenu.add(soda);
         foodMenu.add(sandwich);
         foodMenu.add(noodles);
     }
-    
+
 }
 
 
