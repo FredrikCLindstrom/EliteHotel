@@ -1,0 +1,12 @@
+
+
+	Receipt for Guest 
+
+	NAME: test testsson 
+	Room: 19 Luxury Double Room
+	For: 5 Nights 
+	Price: 20000
+	Extras: Noodles 50 
+	Total Cost: 20050
+
+	Welcome Back

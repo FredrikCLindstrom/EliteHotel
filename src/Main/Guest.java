@@ -4,18 +4,33 @@ package Main;
 
 public class Guest {
     
-    static private int id =1;
+    static private int firstFreeGuestNr =SQLManagement.getLagestIdFromDb();
+    private int guestId;
     private String firstName;
     private String lastName;
     private int numberOfNights;
+    private String phone;
 
-    public Guest(String firstName, String lastName, int numberOfNights) {
+    public Guest(String firstName, String lastName, int numberOfNights, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.numberOfNights=numberOfNights;
-        this.id=id++;  //TODO: get the last id from SQL och adda den här istället för id++;
+        this.guestId=firstFreeGuestNr++;  //TODO: get the last id from SQL och adda den här istället för id++;
+        this.phone=phone;
     }
 
+    public Guest() {
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    
     public String getFirstName() {
         return firstName;
     }
@@ -32,8 +47,8 @@ public class Guest {
         this.lastName = lastName;
     }
 
-    public static int getId() {
-        return id;
+    public int getGuestId() {
+        return guestId;
     }
 
     public int getNumberOfNights() {
