@@ -20,14 +20,14 @@ public class ReceptionUser {
 
     public enum ReceptionMenuItem {
         // parameters menuChar, menuChoiceText, enabledMenuChoice, hiddenMenuChoice
-        RECEPTION_MENU_____SHOW__STATS('T', "Show guest statistics", true, false),
+        RECEPTION_MENU_____SHOW__STATS('T', "Show guest sTatistics", true, false),
         RECEPTION_MENU____SEARCH_GUEST('S', "Search guest data", true, false),
-        RECEPTION_MENU____CHANGE_GUEST('Z', "Change guest data", true, false),
+        RECEPTION_MENU____CHANGE_GUEST('G', "Change Guest data", true, false),
         RECEPTION_MENU____DELETE_GUEST('D', "Delete guest data", true, false),
         RECEPTION_MENU_______BOOK_ROOM('B', "Book a room", true, false),
         RECEPTION_MENU____UPGRADE_ROOM('U', "Upgrade a room", true, false),
         RECEPTION_MENU______ORDER_FOOD('F', "Order Food", true, false),
-        GUEST_MENU________CHECKOUT('C', "Checkout", true, false),
+        GUEST_MENU____________CHECKOUT('C', "Checkout", true, false),
         RECEPTION_MENU_____HIDDEN_TEST('!', "HIDDEN CHOICE, NOT SHOWN", true, true),
         RECEPTION_MENU__EXIT_RECEPTION('X', "EXit reception menu", true, false);
 
@@ -91,7 +91,7 @@ public class ReceptionUser {
 
         do {
             // Show the menu choices, and get a valid choice from the user
-            userMenuChoice = getReceptionMenuChoice("What do you want to do? ");
+            userMenuChoice = getReceptionMenuChoice(Misc.GREEN + "Your choice: " + Misc.RESET);
 
             switch (userMenuChoice) {
                 case RECEPTION_MENU_____SHOW__STATS:
@@ -122,7 +122,7 @@ public class ReceptionUser {
                     String theGuestString1="the guest";
                     GuestUser.orderFoodForTheRoom(theGuestString1);
                     break;
-                case GUEST_MENU________CHECKOUT:
+                case GUEST_MENU____________CHECKOUT:
                     if (checkThatThereAreGuestsThatCanCheckOut()==true) {
                         try {
                             GuestUser.checkOutprint();
@@ -145,7 +145,7 @@ public class ReceptionUser {
                     break;
 
                 default: {
-                    System.out.println(ERROR_COLOR + "Unexpected error, should never end up here after the shape checks, missing case in switch?" + RESET_COLOR);
+                    System.out.println(ERROR_COLOR + "Unexpected error, should never end up here after the checks, missing case in switch?" + RESET_COLOR);
                 }
             }
 
@@ -160,7 +160,7 @@ public class ReceptionUser {
         String choiceStr;
         ReceptionMenuItem userMenuChoice;
 
-        System.out.println("---- Reception menu: ----" + MENU_COLOR);
+        System.out.println(RESET_COLOR + "---- Reception menu: ----" + MENU_COLOR);
 
         // Loop over all menu choices in the enum, and print the "menu choice texts" for the enabled & non-hidden ones
         for (ReceptionMenuItem value : ReceptionMenuItem.values()) {
@@ -220,13 +220,16 @@ public class ReceptionUser {
         boolean okToChange=false;
         Guest guestToMove=new Guest();
         List<Room>availableToChangeToList=new ArrayList<>();
-        System.out.println("--What new room do you want to change the guest to?--");
-        HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).forEach(System.out::println);
-        availableToChangeToList=HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).collect((Collectors.toList()));
+        System.out.print(Misc.GREEN + "What new room do you want to change the guest to? " + Misc.RESET);
+        
+        // Find all the available rooms (that is  rooms with guest == null), and print them
+        availableToChangeToList = HotelManagementSystem.allRoomsList.stream().filter(e->e.guest==null).collect((Collectors.toList()));
+        availableToChangeToList.stream().forEach(System.out::println);
+        
         int newRoomNumber=Input.getUserInputInt();
         
         for (Room room : availableToChangeToList) {
-            if(room.getRoomNr()==newRoomNumber){
+            if(room.getRoomNr() == newRoomNumber){
                 okToChange=true;
             }
         }
@@ -249,11 +252,9 @@ public class ReceptionUser {
                     
                 }
             }
-            System.out.println("--Guest moved from room "+choice+" to room "+newRoomNumber+"--");
+            System.out.println("-- Guest moved from room "+choice+" to room "+newRoomNumber+" --");
         }else {
-            System.err.println("--Can not change to that room--");
-        }
-        
-    }
-     
+            System.err.println("-- Can not change to that room --");
+        }       
+    }   
 }

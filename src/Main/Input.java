@@ -1,4 +1,3 @@
-
 package Main;
 
 import java.util.Scanner;
@@ -19,9 +18,13 @@ public class Input {//input class handles all user input, loops included and all
             try {
                 userInput = sc.nextLine();
                 parseInput = Integer.parseInt(userInput);
-                runInput = false;
+                if (parseInput < 0) {
+                    System.out.print(RED + "Negative numbers are not allowed, Try again: " + RESET_COLOR);
+                } else {
+                    runInput = false;
+                }
             } catch (Exception e) {
-                System.out.println(RED + "Wrong input, Try again: " + RESET_COLOR);
+                System.out.print(RED + "Wrong input, Try again: " + RESET_COLOR);
             }
         } while (runInput);
         return parseInput;
@@ -36,7 +39,7 @@ public class Input {//input class handles all user input, loops included and all
                 userInput = sc.nextLine();
                 run = false;
             } catch (NullPointerException e) {
-                System.out.println(RED + "Wrong input, Try again: " + RESET_COLOR);
+                System.out.print(RED + "Wrong input, Try again: " + RESET_COLOR);
             }
         } while (run);
         return userInput;
@@ -53,10 +56,9 @@ public class Input {//input class handles all user input, loops included and all
                 parseInput = Double.parseDouble(userInput);
                 run = false;
             } catch (Exception e) {
-                System.out.println(RED + "Wrong input, Try again: " + RESET_COLOR);
+                System.out.print(RED + "Wrong input, Try again: " + RESET_COLOR);
             }
         } while (run);
         return parseInput;
     }
 }
-

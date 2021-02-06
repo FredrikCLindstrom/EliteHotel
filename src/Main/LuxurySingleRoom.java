@@ -32,7 +32,7 @@ public class LuxurySingleRoom extends Room {
 
     @Override
     public int rankingPoints() {
-        //Adjusting the ranking points set by the parent class (based on location mainly), with lots of points based on the class of room
+        //Adjusting the ranking points set by the parent class (based on location mainly), bt adding lots of points based on the class of room
         return (super.rankingPoints() + 3000);
     }
 }

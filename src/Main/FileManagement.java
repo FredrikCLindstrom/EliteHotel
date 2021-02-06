@@ -14,7 +14,7 @@ public class FileManagement {
         this.path = filePath;
     }
 
-    public static void printToTextDoc(int roomNumber) throws IOException {
+    public static int printToTextDoc(int roomNumber) throws IOException {
         String firstName="";
         String lastName = "";
         String typeOfRoomString="";
@@ -53,9 +53,10 @@ public class FileManagement {
         }else{
             extrasToReceipt=foodForRoom;
         }
-
+        int totalCostOverall = (pricePerNight*numberOfNights)+totalCostOfFood;
+        
         String testString3 = "\n\n\tReceipt for Guest \n\n\tNAME: " + firstName + " " + lastName + " \n\tRoom: "+roomNumber+" "+typeOfRoomString+"\n\tFor: "+numberOfNights+" Nights ["+pricePerNight+" * "+numberOfNights+"] \n"
-                + "\tPrice: "+pricePerNight*numberOfNights+"\n\tExtras: "+extrasToReceipt +"\n\tTotal Cost: "+((pricePerNight*numberOfNights)+totalCostOfFood)+"\n\n\tWelcome Back";
+                + "\tPrice: "+pricePerNight*numberOfNights+"\n\tExtras: "+extrasToReceipt +"\n\tTotal Cost: "+totalCostOverall+"\n\n\tWelcome Back";
 
         try {
             FileManagement data = new FileManagement("kvitto_" + fullName + ".txt");
@@ -69,6 +70,7 @@ public class FileManagement {
         removeGuestFroomRoomArrayList(roomNumber);
         System.out.println(Misc.GREEN+"Guest: "+firstName+" "+ lastName+" has been checked out");
 
+        return totalCostOverall;
     }
 
     public void writeToFile(String guestInfoString) throws IOException {
