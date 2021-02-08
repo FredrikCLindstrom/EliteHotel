@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
@@ -89,7 +91,7 @@ public class GuestUser {
             // Show the menu choices, and get a valid choice from the user
             userMenuChoice = getGuestMenuChoice(Misc.GREEN + "Your choice: " + Misc.RESET);
             System.out.println("");
-            
+
             switch (userMenuChoice) {
                 case GUEST_MENU___DISPLAY_ROOMS:
 
@@ -229,10 +231,9 @@ public class GuestUser {
         } while (!listNonOccupiedRooms.contains(roomNumberChoice));
 
         createGuestAndAddToRoom(roomNumberChoice, eitherGuestOrYou, eitherGuestsOrYour);
-        
 
     }
-
+    
     private static List<Integer> availableRoomsWithRoomNumber() {
 
         String[] MAP_NR_TO_SPELLED_OUT_STRING = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"};
@@ -247,24 +248,11 @@ public class GuestUser {
         List<Integer> listToReturnAllNonOccupied = new ArrayList<Integer>();
 
         // Show the hotel floorplan, with the available ones in green
-        Building.drawPlan(HotelManagementSystem.allRoomsList, true, false); // list of riomms, markAvailability = true, reception = false 
+        Building.drawPlan(HotelManagementSystem.allRoomsList, true, false); // list of rooms, markAvailability = true, reception = false 
 
         System.out.println(Misc.GREEN + "-- Available rooms: (recommended rooms are shown in" + Misc.YELLOW + " yellow/gold" + Misc.GREEN + ") --" + Misc.RESET);
         for (Class thisClass : roomTypeArrayList) {
 
-            /*
-            long availableNumberOfRooms = HotelManagementSystem.allRoomsList.stream().
-                    filter(e -> e.guest == null).
-                    filter(e -> e.getClass().equals(thisClass)).count(); 
-          
-            newListOfAvailRoomsOfCertainClass = HotelManagementSystem.allRoomsList.stream().
-            
-                   filter(e -> e.guest == null).
-                   filter(e -> e.getClass().equals(thisClass)).map(e -> e.getRoomNr()).collect(toList());
-            newListOfAvailRoomsOfCertainClassObjects = HotelManagementSystem.allRoomsList.stream().
-                    filter(e -> e.guest == null).
-                    filter(e -> e.getClass().equals(thisClass)).collect(toList());
-             */
             // Making a list of available rooms of correct class
             newListOfAvailRoomsOfCertainClassObjects = HotelManagementSystem.allRoomsList.stream().
                     filter(e -> e.guest == null).
@@ -289,7 +277,7 @@ public class GuestUser {
 
                 if (!newListOfAvailRoomsOfCertainClassObjects.isEmpty()) {
                     // There are some rooms, list all of them;
-                    for (Room room: newListOfAvailRoomsOfCertainClassObjects) {
+                    for (Room room : newListOfAvailRoomsOfCertainClassObjects) {
                         if (room.equals(bestRoom)) {
                             System.out.println(Misc.YELLOW + "  Room " + room.roomNr + Misc.RESET);
                         } else {
@@ -358,6 +346,14 @@ public class GuestUser {
 
         SQLManagement.guesstDataToDb(guestId, firstName, lastName, numberOfNights, phoneNr);
 
+        // Also log this data in a log file, with comma separated data: guestId, firstName, lastName, numberOfNights, phoneNr:
+        String rowData = " " + guestId + ", " + firstName+ ", " +  lastName+ ", " +  numberOfNights + ", " +  phoneNr;
+        try {
+            FileGuestDataLog.addRowToLog(rowData);
+        } catch (IOException ex) {
+            System.err.println("Logging guest data ta log failed: "+  ex);
+        }
+
     }
 
     public static void checkOutprint() throws IOException {
@@ -393,7 +389,7 @@ public class GuestUser {
         }
 
         int toBillGuest = FileManagement.printToTextDoc(choice); //this is the method to be called on checkout. 
-        
+
         System.out.println(Misc.GREEN + "Total bill: " + toBillGuest + ", see receipt for details");
     }
 
@@ -461,10 +457,10 @@ public class GuestUser {
             num++;
         }
         System.out.println(CHOICE_COLOR + num + MENU_COLOR + ": Go Back" + Misc.RESET);
-        
+
         System.out.print(Misc.GREEN + "Choice: " + Misc.RESET);
         int choice = Input.getUserInputInt();
-        
+
         return choice;
     }
 
