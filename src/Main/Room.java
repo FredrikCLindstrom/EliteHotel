@@ -1,8 +1,12 @@
 package Main;
 
+import java.util.List;
+
 public class Room implements Ranking, Rankable<Room> {
 
-    public static int firstFreeRoomNr = 1;
+    public static final int LOWEST_ROOM_NUMBER = 1;
+
+    public static int firstFreeRoomNr = LOWEST_ROOM_NUMBER; // Class variable
 
     public int roomNr;
     public String name;
@@ -15,6 +19,25 @@ public class Room implements Ranking, Rankable<Room> {
     public int rankingPoints;
 
     public Guest guest;
+
+    static public int getNrOfCreatedRooms() { // Class method 
+        return firstFreeRoomNr - 1;
+    }
+
+    static public int getClassName() { // Class method 
+        return firstFreeRoomNr - 1;
+    }
+
+    static public Room getRoomWithThisNr(int roomNr, List<Room> roomList) { // Class method 
+
+        Room foundRoom = null;
+        for (Room room : roomList) {
+            if (room.getRoomNr() == roomNr) {
+                foundRoom = room;
+            }
+        }
+        return foundRoom;
+    }
 
     public void setGuest(Guest guest) {
         this.guest = guest;
@@ -59,17 +82,17 @@ public class Room implements Ranking, Rankable<Room> {
     @Override
     public String toString() {
         /* 
-        String str = "Room " + this.roomNr + ", " + this.name + ", " + this.beds + " " + this.bedName + ", ";
-        str += (this.acEquipped ? "AC, " : "no AC, ");
-        str += (this.breakfastIncluded ? "breakfast included, " : "no breakfast, ");
+        String str = "Room " + roomNr + ", " + name + ", " + beds + " " + bedName + ", ";
+        str += (acEquipped ? "AC, " : "no AC, ");
+        str += (breakfastIncluded ? "breakfast included, " : "no breakfast, ");
         str += "cost " + chargePerDay + ", ";
-        str += (this.guest != null) ? guest.toString() : "unoccupied";
+        str += (guest != null) ? guest.toString() : "unoccupied";
          */
         String str = String.format("Room %2d, %-20s, %1d %-13s, %5s, %-17s, cost/night%5d SEK, %s",
-                this.roomNr, this.name, this.beds, this.bedName, (this.acEquipped ? "AC" : "no AC"),
-                (this.breakfastIncluded ? "breakfast included" : "no breakfast"),
+                roomNr, name, beds, bedName, (acEquipped ? "AC" : "no AC"),
+                (breakfastIncluded ? "breakfast included" : "no breakfast"),
                 chargePerDay,
-                ((this.guest != null) ? this.guest.toString() : "unoccupied"));
+                ((guest != null) ? guest.toString() : "unoccupied"));
 
         return str;
     }
@@ -77,31 +100,32 @@ public class Room implements Ranking, Rankable<Room> {
     public String descriptionOfRooms() {
 
         String str = String.format("%-20s, %1d %-13s, %5s, %-17s, cost/night%5d SEK",
-                this.name, this.beds, this.bedName, (this.acEquipped ? "AC" : "no AC"),
-                (this.breakfastIncluded ? "breakfast included" : "no breakfast"),
+                name, beds, bedName, (acEquipped ? "AC" : "no AC"),
+                (breakfastIncluded ? "breakfast included" : "no breakfast"),
                 chargePerDay);
 
         return str;
     }
 
+    @Override
     public int rankingPoints() { // Ranking points based on room numbers/location, adjustments for type/klass of room can be made in subclasses
 
-        int returnValue = 1000; // Base value to be adjusted
+        int returnValue = 1000; // Base value to be adjusted   
 
-        if (this.roomNr % 2 == 0) { // Even room numbers are on the backside, and hava a slightly better view
+        if ((roomNr <= 6) && ((roomNr % 2) == 1) || (roomNr >= 7) && ((roomNr % 2) == 0)) { // Odd room indexes up to 5, and even rooms över 6 have better views
             returnValue += 200;
         }
-        // The corner rooms (first and last two room numbers) with an extra window:
-        if (this.roomNr == 1 || this.roomNr == 2 || this.roomNr == (firstFreeRoomNr - 1) || this.roomNr == (firstFreeRoomNr - 2)) {
+        // The last two rooms are corner rooms with an extra window and better views:
+        if (roomNr == (getNrOfCreatedRooms()) || roomNr == (getNrOfCreatedRooms() - 1)) {
             returnValue += 300;
         }
-        if (this.roomNr == 4) { // The room under the AC unit:
+        if (roomNr == 5) { // The room under the AC unit:
             returnValue -= 150;
         }
-        if (this.roomNr == 7) { // The stain in the carpet is still slightly visible:
+        if (roomNr == 7) { // The stain in the carpet is still slightly visible:
             returnValue -= 80;
         }
-        returnValue -= (5 * Math.abs(this.roomNr - 7)); // Adjusting for distance from the Reception:
+        returnValue -= 5 * (Math.abs(roomNr - 7)); // Adjusting for distance from the reception, dining room & lounge
 
         return returnValue;
     }

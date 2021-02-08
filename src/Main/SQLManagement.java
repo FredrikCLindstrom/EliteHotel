@@ -7,13 +7,13 @@ public class SQLManagement {
 
     private static final String url = "jdbc:mysql://localhost:3306/hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String user = "root";
-    private static final String password = "";//enter password here
+    private static final String PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_ = "Na1shlqym";//enter password here
     private static Statement sqlStatement = null;
     private static Connection sqlConnection;
 
     public static void testConnection() {
         try {
-            sqlConnection = (Connection) DriverManager.getConnection(url, user, password);
+            sqlConnection = (Connection) DriverManager.getConnection(url, user, PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_PASSWORD_);
 
             sqlStatement = sqlConnection.createStatement();
 
@@ -44,11 +44,13 @@ public class SQLManagement {
 
             System.out.println(Misc.BR_YELLOW + "1" + Misc.BR_CYAN + ": search guest by name");
             System.out.println(Misc.BR_YELLOW + "2" + Misc.BR_CYAN + ": go back");
+            
+            System.out.print(Misc.GREEN + "Choice: " + Misc.RESET);
             int choice = Input.getUserInputInt();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Type in name to search");
+                    System.out.print("Type in name to search: ");
                     String searchName = Input.getUserInputString();
                     sqlStatement = sqlConnection.createStatement();
                     ResultSet rs2 = sqlStatement.executeQuery("SELECT*FROM guests WHERE FirstName LIKE '%" + searchName + "%' OR LastName LIKE '%" + searchName + "%';");
@@ -77,21 +79,23 @@ public class SQLManagement {
 
             System.out.println("Update Guest");
 
-            System.out.println(Misc.BR_YELLOW + "1" + Misc.BR_CYAN + ":Update phone number");
-            System.out.println(Misc.BR_YELLOW + "2" + Misc.BR_CYAN + ": update name");
+            System.out.println(Misc.BR_YELLOW + "1" + Misc.BR_CYAN + ": Update phone number");
+            System.out.println(Misc.BR_YELLOW + "2" + Misc.BR_CYAN + ": Update name");
             System.out.println(Misc.BR_YELLOW + "3" + Misc.BR_CYAN + ": Go Back");
+
+            System.out.print(Misc.GREEN + "Choice: " + Misc.RESET);
             int choice = Input.getUserInputInt();
 
             switch (choice) {
 
                 case 1:
                     System.out.println("Who's phone number would you like to update?");
-                    System.out.print("First name:");
+                    System.out.print("First name: ");
                     firstName = Input.getUserInputString();
                     if (firstName.equals(0)) {
                         return;
                     }
-                    System.out.print("Last name:");
+                    System.out.print("Last name: ");
                     lastName = Input.getUserInputString();
 
                     sqlStatement = sqlConnection.createStatement();
@@ -100,14 +104,14 @@ public class SQLManagement {
                     foundMatch = ListFunction(rs);
 
                     if (foundMatch == true) {
-                        System.out.println("What Guest id would you like to change phone number of");
+                        System.out.print("What Guest id would you like to change phone number of: ");
                         int guestIdSQL = Input.getUserInputInt();
 
                         if (guestIdSQL == 0) {
                             return;
                         }
 
-                        System.out.println("What would you like to change the phone number to?");
+                        System.out.print("What would you like to change the phone number to?: ");
                         String newPhoneNr = Input.getUserInputString();
 
                         sqlStatement = sqlConnection.createStatement();
@@ -119,13 +123,13 @@ public class SQLManagement {
                     break;
                 case 2:
                     System.out.println("Search name you would you like to update?");
-                    System.out.println("First name:");
+                    System.out.print("First name: ");
                     firstName = Input.getUserInputString();
                     if (firstName.equals(0)) {
                         return;
                     }
 
-                    System.out.println("Last name:");
+                    System.out.print("Last name: ");
                     lastName = Input.getUserInputString();
 
                     sqlStatement = sqlConnection.createStatement();
@@ -134,13 +138,13 @@ public class SQLManagement {
                     foundMatch = ListFunction(rs2);
 
                     if (foundMatch == true) {
-                        System.out.println("What Guest id would you like to change name of");
+                        System.out.print("What Guest id would you like to change name of: ");
                         int guestIdSQL = Input.getUserInputInt();
 
-                        System.out.println("What would you like to change first name to?");
+                        System.out.print("What would you like to change first name to?: ");
                         String newFirstName = Input.getUserInputString();
 
-                        System.out.println("What would you like to change last name to?");
+                        System.out.print("What would you like to change last name to?: ");
                         String newLastName = Input.getUserInputString();
 
                         sqlStatement = sqlConnection.createStatement();
@@ -168,7 +172,7 @@ public class SQLManagement {
             ListFunction(rs);
 
             System.out.println("who would you like to remove from the system (0 to cancel) ?");
-            System.out.print("GuestID:");
+            System.out.print("GuestID: ");
             int GuestID = Input.getUserInputInt();
 
             if (GuestID == 0) {
@@ -271,7 +275,8 @@ public class SQLManagement {
         System.out.println("2. see guest who stayed the most nights");
         System.out.println("3. total number of guests that have stayed");
         System.out.println("4. go back");
-
+        
+        System.out.print(Misc.GREEN + "Choice: " + Misc.RESET);
         int choice = Input.getUserInputInt();
 
         switch (choice) {

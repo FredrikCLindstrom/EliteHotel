@@ -1,6 +1,5 @@
 package Main;
 
-import static Main.GuestUser.addSomeFodTestMethod;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +20,14 @@ public class HotelManagementSystem {
     public static final String INFO_COLOR = Misc.GREEN;
     public static final String RESET_COLOR = Misc.RESET; // Normally white color
     public static final String USER_CHOICE_COLOR = Misc.GREEN;
+
     private final static Scanner SCANNER = new Scanner(System.in);
 
     public enum MainMenuItem {
         // parameters menuMAIN_MENU_DISPLAY_ROOMS__Char, menuChoiceText, enabledMenuChoice, hiddenMenuChoice
         MAIN_MENU______GUEST_MENU('G', "Guest view", true, false),
         MAIN_MENU_RECEPTION_LOGIN('R', "Reception view", true, false),
+        MAIN_MENU_HIDDEN_ADD_DATA('#', "HIDDEN CHOICE, NOT SHOWN", true, true),
         MAIN_MENU_____HIDDEN_TEST('!', "HIDDEN CHOICE, NOT SHOWN", true, true),
         MAIN_MENU____EXIT_PROGRAM('X', "EXit the program", true, false);
 
@@ -81,13 +82,16 @@ public class HotelManagementSystem {
     }
 
     public static void main(String[] args) {
-        addMenuItemsToMenu();
-        GuestUser.addSomeFodTestMethod();//lägger till 2 foods på rum 12 
+        addMenuItemsToMenu(); // Set up the menu system;
+
         addRoomsToLists();
-        GuestUser.addSomePeopleToRooms();//lägger till 3 gäster i hotellet vid start 
+
+        // Adding 3 guests, and some food-orders to one rooom TODO: remove
+        GuestUser.addSomePeopleToRooms();
+        GuestUser.addSomeFodTestMethod();
 
         // Show the hotel plan with free rooms in green, and occupied ones in red
-        Building.drawPlan(allRoomsList, true, false); // (markAvailability = true, reception = false
+        Building.drawPlan(allRoomsList, false, false); // (markAvailability = true, reception = false
 
         //Hotel thisHotel = new Hotel();
         UseAsGuestOrReceptionist();
@@ -119,6 +123,12 @@ public class HotelManagementSystem {
                     System.out.println("DEBUG = " + Misc.debug + " for  Misc.printDebug()");
                     break;
 
+                case MAIN_MENU_HIDDEN_ADD_DATA:
+                    System.out.println("Hidden menu choice: Adding 3 guests, and some food on room 12. ");
+                    GuestUser.addSomePeopleToRooms();
+                    GuestUser.addSomeFodTestMethod();
+                    break;
+
                 case MAIN_MENU____EXIT_PROGRAM:
                     System.out.println("Exiting the program");
                     break;
@@ -136,7 +146,7 @@ public class HotelManagementSystem {
         String choiceStr;
         MainMenuItem userMenuChoice;
 
-        System.out.println("==== Main menu: ====" + MENU_COLOR);
+        System.out.println(Misc.RESET + "==== Main menu: ====" + MENU_COLOR);
 
         // Loop over all menu choices in the enum, and print the "menu choice texts" for the enabled & non-hidden ones
         for (MainMenuItem value : MainMenuItem.values()) {
@@ -170,28 +180,41 @@ public class HotelManagementSystem {
     }
 
     public static void addRoomsToLists() {
+        Room room;
 
-        // Add the six room on the west wing, so the order corresponds to the hotel plan
-        allRoomsList.add(new StandardDoubleRoom());
-        allRoomsList.add(new StandardSingleRoom());
-        allRoomsList.add(new StandardDoubleRoom());
-        allRoomsList.add(new StandardSingleRoom());
-        allRoomsList.add(new StandardDoubleRoom());
-        allRoomsList.add(new StandardSingleRoom());
-        // Add the six room on the east wing, so the order corresponds to the hotel plan
-        allRoomsList.add(new LuxurySingleRoom());
-        allRoomsList.add(new LuxuryDoubleRoom());
-        allRoomsList.add(new LuxurySingleRoom());
-        allRoomsList.add(new LuxuryDoubleRoom());
-        allRoomsList.add(new LuxurySingleRoom());
-        allRoomsList.add(new LuxuryDoubleRoom());
+        // Add the six room on the west wing, corresponding to the hotel plan
+        room = new StandardDoubleRoom();
+        allRoomsList.add(room);
+        room = new StandardSingleRoom();
+        allRoomsList.add(room);
+        diffrentTypeOfRoomsList.add(room);  // Add one of each Room classes in differentTypeOfRoomsList
+        room = new StandardDoubleRoom();
+        allRoomsList.add(room);
+        diffrentTypeOfRoomsList.add(room); // Add one of each Room classes in differentTypeOfRoomsList
+        room = new StandardSingleRoom();
+        allRoomsList.add(room);
+        room = new StandardDoubleRoom();
+        allRoomsList.add(room);
+        room = new StandardSingleRoom();
+        allRoomsList.add(room);
 
-        diffrentTypeOfRoomsList.add(new StandardSingleRoom());
-        diffrentTypeOfRoomsList.add(new StandardDoubleRoom());
-        diffrentTypeOfRoomsList.add(new LuxurySingleRoom());
-        diffrentTypeOfRoomsList.add(new LuxuryDoubleRoom());
-        
-        allRoomsList.stream().forEach(a-> System.out.println(a.toString()));
+        // Add the six room on the hotels east wing, corresponding to the hotel plan
+        room = new LuxurySingleRoom();
+        allRoomsList.add(room);
+        diffrentTypeOfRoomsList.add(room);  // Add one of each Room classes in differentTypeOfRoomsList
+        room = new LuxuryDoubleRoom();
+        allRoomsList.add(room);
+        diffrentTypeOfRoomsList.add(room);  // Add one of each Room classes in differentTypeOfRoomsList
+        room = new LuxurySingleRoom();
+        allRoomsList.add(room);
+        room = new LuxuryDoubleRoom();
+        allRoomsList.add(room);
+        room = new LuxurySingleRoom();
+        allRoomsList.add(room);
+        room = new LuxuryDoubleRoom();
+        allRoomsList.add(room);
+
+        // allRoomsList.stream().forEach(a -> System.out.println(a.toString()));
     }
 
     public static void testingMethod() throws IOException {
@@ -394,4 +417,4 @@ objektive for course.
  Lycka till
 
 Copyright(2021) Ghulam Murtaza
-*/
+ */
