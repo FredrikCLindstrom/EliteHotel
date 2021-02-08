@@ -83,13 +83,13 @@ public class HotelManagementSystem {
 
     public static void main(String[] args) {
         addMenuItemsToMenu(); // Set up the menu system;
-        
+
         addRoomsToLists();
-        
+
         // Adding 3 guests, and some food-orders to one rooom TODO: remove
         GuestUser.addSomePeopleToRooms();
         GuestUser.addSomeFodTestMethod();
-        
+
         // Show the hotel plan with free rooms in green, and occupied ones in red
         Building.drawPlan(allRoomsList, false, false); // (markAvailability = true, reception = false
 

@@ -19,7 +19,7 @@ public class Building {
         // Initialize all Room colors to Green/red depending on avialably/occupied by a guest
         for (roomNr = 1; roomNr <= Room.getNrOfCreatedRooms(); roomNr++) { // roomIndex = RoomNr-1;
             // if the guest is null it's available 
-            colorOfRooms[roomNr - 1] = (roomList.get(roomNr - 1).guest == null) ? Misc.GREEN : Misc.RED;
+            colorOfRooms[roomNr - 1] = (Room.getRoomWithThisNr(roomNr, roomList).guest == null) ? Misc.GREEN : Misc.RED;
         }
 
         if (markAvailability) {
@@ -146,7 +146,7 @@ public class Building {
     static private final String[] HOTEL_COLORS = {
         //1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
         "i              m  i              m    k                               m i            m i                            m  i              ",
-        "me_ie________________ie______m        k    i              k            me__ie_____________________________ie______________________m   ",
+        "me_ie________________ie______m        k                   k            me__ie_____________________________ie______________________m   ",
         "ef--´a WC S..exeg eaC S..|f-´eg       k                                ef____|            |_____eg  x ef__|___|        |______|   e   ",
         "erOOM 1a¨¨¨¨¨ei   ea¨¨¨¨     eg       k                                ef        rROOM 11f      ei    ef      rROOM 12f  O  O     e   ",
         "efb______   e     e  rROOM 2 eg                                        efb_______ f            e       ef             b________f  e   ",

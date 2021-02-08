@@ -92,7 +92,8 @@ public class ReceptionUser {
         do {
             // Show the menu choices, and get a valid choice from the user
             userMenuChoice = getReceptionMenuChoice(Misc.GREEN + "Your choice: " + Misc.RESET);
-
+            System.out.println("");
+            
             switch (userMenuChoice) {
                 case RECEPTION_MENU_____SHOW__STATS:
                     SQLManagement.showStats();
@@ -160,7 +161,7 @@ public class ReceptionUser {
         String choiceStr;
         ReceptionMenuItem userMenuChoice;
 
-        System.out.println(RESET_COLOR + "---- Reception menu: ----" + MENU_COLOR);
+        System.out.println(RESET_COLOR + "--- Reception menu: ---" + MENU_COLOR);
 
         // Loop over all menu choices in the enum, and print the "menu choice texts" for the enabled & non-hidden ones
         for (ReceptionMenuItem value : ReceptionMenuItem.values()) {

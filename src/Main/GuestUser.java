@@ -88,7 +88,8 @@ public class GuestUser {
         do {
             // Show the menu choices, and get a valid choice from the user
             userMenuChoice = getGuestMenuChoice(Misc.GREEN + "Your choice: " + Misc.RESET);
-
+            System.out.println("");
+            
             switch (userMenuChoice) {
                 case GUEST_MENU___DISPLAY_ROOMS:
 
@@ -152,7 +153,7 @@ public class GuestUser {
         String choiceStr;
         GuestMenuItem userMenuChoice;
 
-        System.out.println(RESET_COLOR + "Guest menu:" + MENU_COLOR);
+        System.out.println(RESET_COLOR + "--- Guest menu: ---" + MENU_COLOR);
 
         // Loop over all menu choices in the enum, and print the "menu choice texts" for the enabled & non-hidden ones
         for (GuestMenuItem value : GuestMenuItem.values()) {
@@ -228,12 +229,13 @@ public class GuestUser {
         } while (!listNonOccupiedRooms.contains(roomNumberChoice));
 
         createGuestAndAddToRoom(roomNumberChoice, eitherGuestOrYou, eitherGuestsOrYour);
+        
 
     }
 
     private static List<Integer> availableRoomsWithRoomNumber() {
 
-        String[] mapNrToString = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"};
+        String[] MAP_NR_TO_SPELLED_OUT_STRING = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"};
 
         List<Class> roomTypeArrayList = new ArrayList<>();
         roomTypeArrayList.add(StandardSingleRoom.class);
@@ -280,18 +282,18 @@ public class GuestUser {
                 String bedRoomName = thisClass.getTypeName();
                 String useThisClassNameForPrintOut = bedRoomName.substring(5);
 
-                System.out.println(Misc.RESET + mapNrToString[(int) availableNumberOfRooms] + " " + useThisClassNameForPrintOut
-                        + ((newListOfAvailRoomNrsOfCertainClass.size() == 1) ? " is " : "s are ")
+                System.out.println(Misc.RESET + MAP_NR_TO_SPELLED_OUT_STRING[(int) availableNumberOfRooms] + " " + useThisClassNameForPrintOut
+                        + ((newListOfAvailRoomsOfCertainClassObjects.size() == 1) ? " is " : "s are ")
                         + "available:"
-                        + ((newListOfAvailRoomNrsOfCertainClass.isEmpty()) ? ", unfortunately" : ""));
+                        + ((newListOfAvailRoomsOfCertainClassObjects.isEmpty()) ? ", unfortunately" : ""));
 
-                if (!newListOfAvailRoomNrsOfCertainClass.isEmpty()) {
+                if (!newListOfAvailRoomsOfCertainClassObjects.isEmpty()) {
                     // There are some rooms, list all of them;
-                    for (Integer roomNr : newListOfAvailRoomNrsOfCertainClass) {
-                        if (roomNr == bestRoom.getRoomNr()) {
-                            System.out.println(Misc.YELLOW + "  Room " + roomNr + Misc.RESET);
+                    for (Room room: newListOfAvailRoomsOfCertainClassObjects) {
+                        if (room.equals(bestRoom)) {
+                            System.out.println(Misc.YELLOW + "  Room " + room.roomNr + Misc.RESET);
                         } else {
-                            System.out.println(Misc.GREEN + "  Room " + roomNr + Misc.RESET);
+                            System.out.println(Misc.GREEN + "  Room " + room.roomNr + Misc.RESET);
                         }
                     }
                 } else {

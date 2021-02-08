@@ -1,8 +1,12 @@
 package Main;
 
+import java.util.List;
+
 public class Room implements Ranking, Rankable<Room> {
 
-    public static int firstFreeRoomNr = 1; // Class variable
+    public static final int LOWEST_ROOM_NUMBER = 1;
+
+    public static int firstFreeRoomNr = LOWEST_ROOM_NUMBER; // Class variable
 
     public int roomNr;
     public String name;
@@ -19,11 +23,21 @@ public class Room implements Ranking, Rankable<Room> {
     static public int getNrOfCreatedRooms() { // Class method 
         return firstFreeRoomNr - 1;
     }
-    
+
     static public int getClassName() { // Class method 
         return firstFreeRoomNr - 1;
     }
-    
+
+    static public Room getRoomWithThisNr(int roomNr, List<Room> roomList) { // Class method 
+
+        Room foundRoom = null;
+        for (Room room : roomList) {
+            if (room.getRoomNr() == roomNr) {
+                foundRoom = room;
+            }
+        }
+        return foundRoom;
+    }
 
     public void setGuest(Guest guest) {
         this.guest = guest;
@@ -102,7 +116,7 @@ public class Room implements Ranking, Rankable<Room> {
             returnValue += 200;
         }
         // The last two rooms are corner rooms with an extra window and better views:
-        if (roomNr == (getNrOfCreatedRooms()) || roomNr == (getNrOfCreatedRooms()-1)) {
+        if (roomNr == (getNrOfCreatedRooms()) || roomNr == (getNrOfCreatedRooms() - 1)) {
             returnValue += 300;
         }
         if (roomNr == 5) { // The room under the AC unit:
